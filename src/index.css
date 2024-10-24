@@ -1,0 +1,24 @@
+* {
+  /* background: #fff; */
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Nexa-Bold";
+}
+
+@font-face {
+  font-family: "Nexa-Bold";
+  src: local("Nexa-Bold"), url("./fonts/Nexa-Bold.otf") format("opentype");
+  font-weight: normal;
+}
+
+.contents {
+  display: flex;
+  margin: auto;
+  width: 70%;
+  margin-top: 3rem;
+  padding: 1rem;
+  /* border: 1px solid yellow; */
+}
+
+

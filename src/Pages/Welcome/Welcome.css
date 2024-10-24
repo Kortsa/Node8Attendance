@@ -1,0 +1,63 @@
+
+
+.contents .welcomeCard {
+  width: 32rem;
+  padding: 2rem;
+  margin: 2rem;
+  border-radius: 1rem;
+  border: 1px solid black;
+  box-shadow: 1px 1px 10px 1px rgba(0, 0, 0, 0.1);
+  margin-left: 12rem;
+}
+
+.contents .welcomeCard h2 {
+  text-align: center;
+  color: #F15E1C;
+  font-size: 3rem;
+}
+
+.contents .welcomeCard Link{
+    display: none;
+}
+
+
+
+.contents .welcomeCard .card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 3rem auto;
+  width: 75%;
+  height: 5rem;
+  border-radius: 1rem;
+  padding: 3rem;
+  box-shadow: 1px 1px 10px 1px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  color: black;
+}
+
+.contents .welcomeCard .card:hover{
+    background-color: #F15E1C;
+    color: #fff;
+}
+
+.contents .welcomeCard .card h1{
+    font-size: 3rem;
+    font-weight: 900;
+}
+
+.contents .welcomeCard .card p{
+    font-size: 1rem;
+    
+
+   
+}
+
+
+
+
+
+
+
+
