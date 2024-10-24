@@ -7,12 +7,37 @@
   margin-left: 12rem;
 }
 
-.eventCard .inputField {
-  width: 100%;
-  padding: 1rem;
+.eventCard .search_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.7rem;
   border-radius: 1rem;
   border: 1px solid rgb(109, 109, 109);
 }
+
+.eventCard .search_container img{
+  width: 20px;
+}
+
+.eventCard .inputField {
+  width: 100%;
+  border: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+
+
+
+/* text-align: center; */
+}
+
+.eventCard .inputField:focus{
+  outline: none; 
+  border: none;
+}
+
+
 
 .eventCard .events_Cards {
   /* margin: 0 auto; */

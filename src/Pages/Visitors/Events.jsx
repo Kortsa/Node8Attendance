@@ -1,4 +1,5 @@
 import logo from "../../assets/N8.png";
+import searchIcon from "../../assets/search.png";
 import { Link } from "react-router-dom";
 import "../Visitors/Events.css";
 
@@ -18,11 +19,16 @@ const Events = () => {
           </Link>
         </div>
         <div className="eventCard">
-          <input
-            type="search"
-            placeholder="Search for events, programs ..."
-            className="inputField"
-          />
+          <div className="search_container">
+            <input
+              // type="search"
+              placeholder="Search for events, programs ..."
+              className="inputField"
+            />
+            <span className="searchIcon">
+              <img src={searchIcon} alt="" />
+            </span>
+          </div>
           <div className="events_Cards">
             {EventCards.map((event, id) => (
               <div key={id} className="event_card">
