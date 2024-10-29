@@ -1,0 +1,41 @@
+.contents .form_card{
+    width: 35rem;
+    padding: 2rem;
+    margin: 2rem;
+    border-radius: 1rem;
+    border: 1px solid black;
+    box-shadow: 1px 1px 10px 1px rgba(0, 0, 0, 0.1);
+    margin-left: 12rem;
+}
+
+.contents .form_card h2{
+    text-align: center;
+}
+
+@media (min-width: 320px) and (max-width: 480px) {
+    .contents .form_card{
+        margin: 0;
+        width: 100%;
+        padding: 1;
+        margin-top: 2rem;
+    }
+
+    .contents .form_card h2{
+        /* text-align: center; */
+        font-size: 0.9rem;
+    }
+}
+
+
+@media (min-width: 481px) and (max-width: 767px){
+    .contents .form_card{
+        margin: 0;
+        width: 100%;
+        padding: 1;
+        margin-top: 2rem;
+    }
+    .contents .form_card h2{
+        /* text-align: center; */
+        font-size: 1.5rem;
+    }
+}
