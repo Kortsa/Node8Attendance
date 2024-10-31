@@ -57,3 +57,38 @@ a {
     margin-top: 6rem;
   }
 }
+
+
+
+/* 
+  ##Device = Tablets, Ipads (portrait)  
+*/
+@media (min-width: 768px) and (max-width: 1024px){
+  .contents {
+  /* background-color: red; */
+  width: 90%;
+  }
+}
+
+
+/* 
+  ##Device = Laptops, Desktops  
+*/
+@media (min-width: 1025px) and (max-width: 1280px) {
+  .contents {
+    /* background-color: red; */
+    width: 90%;
+    }
+}
+
+
+/* 
+  ##Device = Desktops 
+*/
+@media (min-width: 1281px){
+  .contents {
+    /* background-color: red; */
+    width: 90%;
+    }
+}
+

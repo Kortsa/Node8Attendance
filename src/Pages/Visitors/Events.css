@@ -124,8 +124,7 @@
   }
 }
 
-
-@media (min-width: 481px) and (max-width: 767px){
+@media (min-width: 481px) and (max-width: 767px) {
   .eventCard {
     margin: 0;
     width: 100%;
@@ -133,7 +132,7 @@
     margin-top: 2rem;
   }
 
-  .eventCard .search_container{
+  .eventCard .search_container {
     padding: 0.5rem;
     display: flex;
     justify-content: center;
@@ -168,5 +167,45 @@
     text-align: center;
     margin-top: 1rem;
     padding: 0.7rem;
+  }
+}
+
+/* 
+  ##Device = Tablets, Ipads (portrait)  
+*/
+@media (min-width: 768px) and (max-width: 1024px) {
+  .eventCard {
+    margin-left: 5rem;
+    width: 45rem;
+  }
+
+  .eventCard .events_Cards {
+    margin: 0 3rem;
+  }
+}
+
+/* 
+  ##Device = Laptops, Desktops  
+*/
+@media (min-width: 1025px) and (max-width: 1280px) {
+  .eventCard {
+    margin-left: 5rem;
+    width: 45rem;
+  }
+  .eventCard .events_Cards {
+    margin: 0 3rem;
+  }
+}
+
+/* 
+  ##Device = Desktops 
+*/
+@media (min-width: 1281px) {
+  .eventCard {
+    margin-left: 5rem;
+    width: 45rem;
+  }
+  .eventCard .events_Cards {
+    margin: 0 3rem;
   }
 }

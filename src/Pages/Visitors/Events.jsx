@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import logo from "../../assets/N8.png";
 import searchIcon from "../../assets/search.png";
 import { Link } from "react-router-dom";
@@ -14,11 +14,26 @@ const allEventCards = [
   { title: "Networking Nights", to: "" },
   { title: "Code Jams", to: "" },
   { title: "Young And Loud", to: "/young_loud_form" },
-  // Add more events here as needed
 ];
 
 const Events = () => {
   const [startIndex, setStartIndex] = useState(0);
+  const [events, setEvents] = useState([]);
+
+  useEffect(() => {
+    const fetchEvents = async () => {
+      try {
+        const response = await fetch(
+          "https://timesync-backend-production.up.railway.app/events/all?page=1&page_size=50"
+        );
+        const data = await response.json();
+        setEvents(data.events);
+      } catch (error) {
+        console.error("Error fetching events:", error);
+      }
+    };
+    fetchEvents();
+  }, []);
 
   const showMoreCards = () => {
     if (startIndex + 4 < allEventCards.length) {
@@ -50,17 +65,14 @@ const Events = () => {
             <img src={searchIcon} alt="" />
           </span>
         </div>
-        
-          <div className="events_Cards">
-            {allEventCards
-              .slice(startIndex, startIndex + 4)
-              .map((event, id) => (
-                <Link key={id} to={event.to} className="event_card">
-                  {event.title}
-                </Link>
-              ))}
-          </div>
-        
+
+        <div className="events_Cards">
+          {allEventCards.slice(startIndex, startIndex + 4).map((event, id) => (
+            <Link key={id} to={event.to} className="event_card">
+              {event.title}
+            </Link>
+          ))}
+        </div>
 
         <div className="button_container">
           {startIndex > 0 && (
