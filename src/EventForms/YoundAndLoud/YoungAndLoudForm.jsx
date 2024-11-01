@@ -291,7 +291,7 @@ const YoungAndLoudForm = () => {
             )}
           </div>
           <div className="content">
-            <label>Work</label>
+            <label>Occupation</label>
             <select
               name="work"
               value={formData.work}
