@@ -26,6 +26,14 @@ a {
   color: black;
 }
 
+
+.error-text{
+  color: red;
+  font-size: 0.6rem;
+  font-family: sans-serif;
+  margin-top: 0.2rem;
+}
+
 /* 
   ##Device = Most of the Smartphones Mobiles (Portrait)
   ##Screen = B/w 320px to 479px
