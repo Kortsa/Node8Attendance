@@ -49,28 +49,50 @@ const YoungAndLoudForm = () => {
                 className="inputField"
               />
             </div>
-            <div className="content school">
-              <label>School level/work</label>
-              <input
-                type="text"
-                placeholder="Enter your school ..."
-                className="inputField"
-              />
+            <div className="content ">
+              <label>School Level</label>
+              <select className="inputField">
+                <option value="">Select one</option>
+                <option value="male">JHS</option>
+                <option value="female">SHS</option>
+                <option value="female">Tertiary</option>
+              </select>
+            </div>
+            <div className="content ">
+              <label>Work</label>
+              <select className="inputField">
+                <option value="">Select one</option>
+                <option value="male">Apprentice</option>
+                <option value="female">Keke Driver</option>
+                <option value="female">Trader</option>
+                <option value="female">Teacher</option>
+                <option value="female">Banker</option>
+                <option value="female">Others</option>
+              </select>
             </div>
             <div className="content ">
               <label>How did you hear of the festvial</label>
               <select className="inputField">
                 <option value="">Select one</option>
-                <option value="male">From a friend</option>
-                <option value="female">Social Media</option>
+                <option value="male">Radio</option>
+                <option value="female">School Annoucement</option>
+                <option value="female">Instagram</option>
+                <option value="female">Facebook</option>
+                <option value="female">Friends</option>
+                <option value="female">Others</option>
               </select>
             </div>
             <div className="content school">
               <label>Which of the festival are most interested in</label>
               <select className="inputField">
                 <option value="">Select one</option>
-                <option value="male">Arts</option>
-                <option value="female">Jams</option>
+                <option value="male">Artist Performance</option>
+                <option value="female">Live Painting</option>
+                <option value="female">Street Games</option>
+                <option value="female">Skating</option>
+                <option value="female">Talent Contest</option>
+                <option value="female">All</option>
+                {/* add more categories */}
               </select>
             </div>
             <div className="content school">

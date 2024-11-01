@@ -25,11 +25,21 @@ const Events = () => {
       try {
         const response = await fetch(
           "https://timesync-backend-production.up.railway.app/events/all?page=1&page_size=50"
+          // {
+          //   method: "GET",
+          //   headers: {
+          //     "Content-Type": "application/json",
+          //     "X-API-Key": "e0a835e08ffb4406b98edcd153647",
+          //   },
+          // }
         );
+
         const data = await response.json();
+
         setEvents(data.events);
+        console.log(data);
       } catch (error) {
-        console.error("Error fetching events:", error);
+        // console.error("Error fetching events:", error);
       }
     };
     fetchEvents();
