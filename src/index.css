@@ -34,6 +34,10 @@ a {
   margin-top: 0.2rem;
 }
 
+button{
+  border: none;
+}
+
 /* 
   ##Device = Most of the Smartphones Mobiles (Portrait)
   ##Screen = B/w 320px to 479px
