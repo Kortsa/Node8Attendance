@@ -1,9 +1,12 @@
 import React from 'react'
+import SideBar from '../../SideBar/SideBar'
+
+import "../AdminHome/AdminHome.css"
 
 const AdminHome = () => {
   return (
-    <div>
-      <h1>Admin Home</h1>
+    <div className='admin-content'>
+     <SideBar />
     </div>
   )
 }

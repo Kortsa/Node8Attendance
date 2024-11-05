@@ -1,0 +1,21 @@
+.sidebar_content {
+  background-color: red;
+  width: 20%;
+  display: flex;
+  padding: 5rem;
+  height: 100vh;
+  /* box-shadow: 0px 10px 0px 10px; */
+  /* border-radius: 1rem 1rem; */
+}
+
+.sidebar_content .tab {
+  display: flex;
+  align-items: center;
+  margin-top: 1rem;
+  /* padding: 1rem 0; */
+  /* justify-content: center; */
+}
+
+.sidebar_content .tab img {
+  height: 1rem;
+}

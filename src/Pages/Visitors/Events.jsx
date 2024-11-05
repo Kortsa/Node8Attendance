@@ -4,16 +4,9 @@ import searchIcon from "../../assets/search.png";
 import { Link } from "react-router-dom";
 import "../Visitors/Events.css";
 
-const allEventCards = [
-  { title: "Young And Loud", to: "/young_loud_form" },
-  { title: "Last Friday Hangout", to: "" },
-  { title: "BootCamps", to: "" },
-  { title: "Women Community", to: "" },
-  { title: "Tech Talks", to: "" },
-  { title: "Hackathons", to: "" },
-  { title: "Networking Nights", to: "" },
-  { title: "Code Jams", to: "" },
-  { title: "Young And Loud", to: "/young_loud_form" },
+const Random_events = [
+  { name: "Young And Loud", to: "/young_loud_form" },
+  { name: "Last Friday Hangout", to: "" },
 ];
 
 const Events = () => {
@@ -24,29 +17,26 @@ const Events = () => {
     const fetchEvents = async () => {
       try {
         const response = await fetch(
-          "https://timesync-backend-production.up.railway.app/events/all?page=1&page_size=50"
-          // {
-          //   method: "GET",
-          //   headers: {
-          //     "Content-Type": "application/json",
-          //     "X-API-Key": "e0a835e08ffb4406b98edcd153647",
-          //   },
-          // }
+          "https://timesync-backend-production.up.railway.app/events/?page=1&page_size=50",
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
         );
-
         const data = await response.json();
-
-        setEvents(data.events);
-        console.log(data);
+        setEvents(data.events); // Update based on your API response structure
       } catch (error) {
-        // console.error("Error fetching events:", error);
+        console.error("Error fetching events:", error);
       }
     };
+
     fetchEvents();
   }, []);
 
   const showMoreCards = () => {
-    if (startIndex + 4 < allEventCards.length) {
+    if (startIndex + 4 < events.length) {
       setStartIndex((prev) => prev + 4);
     }
   };
@@ -67,7 +57,7 @@ const Events = () => {
       <div className="eventCard">
         <div className="search_container">
           <input
-            // type="search"
+            type="search"
             placeholder="Search for events, programs ..."
             className="inputField"
           />
@@ -77,11 +67,18 @@ const Events = () => {
         </div>
 
         <div className="events_Cards">
-          {allEventCards.slice(startIndex, startIndex + 4).map((event, id) => (
-            <Link key={id} to={event.to} className="event_card">
-              {event.title}
-            </Link>
-          ))}
+          {Random_events.length === 0 ? (
+            <div className="no-events">
+              <p>No events available here</p>
+            </div>
+          ) : (
+            Random_events.slice(startIndex, startIndex + 4).map((event, id) => (
+              <Link key={id} to={event.to} className="event_card">
+                {event.name}
+              </Link>
+            ))
+          )
+          }
         </div>
 
         <div className="button_container">
@@ -90,7 +87,7 @@ const Events = () => {
               Previous
             </div>
           )}
-          {startIndex + 4 < allEventCards.length && (
+          {startIndex + 4 < events.length && (
             <div className="btn" onClick={showMoreCards}>
               View More
             </div>
