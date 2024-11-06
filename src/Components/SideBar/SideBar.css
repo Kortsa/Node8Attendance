@@ -1,21 +1,120 @@
 .sidebar_content {
-  background-color: red;
+  background-color: white;
   width: 20%;
   display: flex;
-  padding: 5rem;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
   height: 100vh;
-  /* box-shadow: 0px 10px 0px 10px; */
-  /* border-radius: 1rem 1rem; */
+  border-radius: 0rem 2rem 2rem 0rem;
+  box-shadow: 2rem 1rem 5rem 2rem rgb(235, 234, 234);
+}
+
+.sidebar_content .tabs {
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+  height: 40%;
 }
 
 .sidebar_content .tab {
+  width: 100%;
   display: flex;
   align-items: center;
-  margin-top: 1rem;
-  /* padding: 1rem 0; */
-  /* justify-content: center; */
+  color: black;
+  
 }
 
 .sidebar_content .tab img {
-  height: 1rem;
+  height: 2.5rem;
+  width: 2.5rem;
+  margin-right: 1rem;
+}
+
+.sidebar_content .tab h2 {
+  font-size: 1.3rem;
+  margin-right: 3rem;
+}
+
+.modal {
+  width: 40%;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 2rem;
+}
+
+.modal h2 {
+  margin: 1rem auto;
+  width: 50%;
+  font-size: 2rem;
+  text-align: center;
+}
+
+.modal .modal_form {
+  width: 100%;
+  margin-left: 1.5rem;
+}
+
+.modal .modal_form .labels {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 1rem;
+  width: 100%;
+}
+
+.modal .modal_form label {
+  display: flex;
+  flex-direction: column;
+  margin-top: 2rem;
+  font-size: 0.7rem;
+}
+
+.modal .modal_form .inputfield {
+  width: 90%;
+  padding: 0.3rem;
+  border-radius: 0.5rem;
+  border: 1px solid #f15e1c;
+  margin-top: 0.7rem;
+}
+
+.modal .modal_form .inputfield:focus {
+  border: 1px solid #f15e1c;
+  outline: none;
+}
+
+.modal .modal_form .btn {
+  margin: auto;
+  width: 50%;
+  padding: 0.7rem;
+  background-color: #f15e1c;
+  border-radius: 0.7rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  color: #fff;
+  cursor: pointer;
+  margin-top: 8rem;
+  margin-bottom: 2rem;
+}
+
+.sidebar_content .logout{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: black;
+  font-size: 1.5rem;
+  text-align: center;
+  width: auto;
+  width: 100%;
+ 
+}
+
+.sidebar_content .logout img{
+  height: 2rem;
+  width: 2rem ;
+  margin-right: 1rem;
 }

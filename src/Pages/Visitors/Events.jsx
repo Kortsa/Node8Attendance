@@ -77,8 +77,7 @@ const Events = () => {
                 {event.name}
               </Link>
             ))
-          )
-          }
+          )}
         </div>
 
         <div className="button_container">
