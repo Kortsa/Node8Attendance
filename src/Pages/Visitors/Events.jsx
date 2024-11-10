@@ -67,12 +67,12 @@ const Events = () => {
         </div>
 
         <div className="events_Cards">
-          {Random_events.length === 0 ? (
+          {events.length === 0 ? (
             <div className="no-events">
               <p>No events available here</p>
             </div>
           ) : (
-            Random_events.slice(startIndex, startIndex + 4).map((event, id) => (
+            events.slice(startIndex, startIndex + 4).map((event, id) => (
               <Link key={id} to={event.to} className="event_card">
                 {event.name}
               </Link>
