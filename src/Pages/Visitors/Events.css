@@ -63,6 +63,8 @@
   width: 100%;
   display: flex;
   justify-content: space-between;
+  border: 1px solid red;
+  padding: 2rem;
 }
 .eventCard .btn {
   width: 48%;
@@ -76,6 +78,8 @@
   justify-content: center;
   font-size: 1.2rem;
   cursor: pointer;
+  background-color: #007bff !important;
+  color: #fff !important;
 }
 
 /* 

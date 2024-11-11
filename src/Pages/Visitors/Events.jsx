@@ -4,11 +4,6 @@ import searchIcon from "../../assets/search.png";
 import { Link } from "react-router-dom";
 import "../Visitors/Events.css";
 
-const Random_events = [
-  { name: "Young And Loud", to: "/young_loud_form" },
-  { name: "Last Friday Hangout", to: "" },
-];
-
 const Events = () => {
   const [startIndex, setStartIndex] = useState(0);
   const [events, setEvents] = useState([]);
@@ -26,7 +21,8 @@ const Events = () => {
           }
         );
         const data = await response.json();
-        setEvents(data.events); // Update based on your API response structure
+        console.log("Fetched data:", data); // Log the fetched data
+        setEvents(data.data || []);
       } catch (error) {
         console.error("Error fetching events:", error);
       }
@@ -73,14 +69,14 @@ const Events = () => {
             </div>
           ) : (
             events.slice(startIndex, startIndex + 4).map((event, id) => (
-              <Link key={id} to={event.to} className="event_card">
+              <Link key={id} to={event.to || "/young_loud_form"} className="event_card">
                 {event.name}
               </Link>
             ))
           )}
         </div>
 
-        <div className="button_container">
+        {/* <div className="button_container">
           {startIndex > 0 && (
             <div className="btn" onClick={showPreviousCards}>
               Previous
@@ -91,7 +87,7 @@ const Events = () => {
               View More
             </div>
           )}
-        </div>
+        </div> */}
       </div>
     </div>
   );

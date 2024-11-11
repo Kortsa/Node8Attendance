@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import searchIcon from "../../../assets/search.png";
 import "../AdminEventsData/Attendees_details.css";
 
@@ -14,20 +14,31 @@ const headers = [
   "Interests",
 ];
 
-const CollectedDetails = [
-  {
-    name: "Leo Kortsa",
-    gender: "Male",
-    number: "0544993044",
-    place: "Aflao",
-    school: "shs",
-    work: "dev",
-    hear: "instagram",
-    upadtes: "Yes",
-    interest: "arts",
-  },
-];
 function Attendees_details() {
+  const [attendee, setAttendee] = useState([]);
+
+  useEffect(() => {
+    const atttendeeData = async () => {
+      try {
+        const response = await fetch(
+          "https://timesync-backend-production.up.railway.app/attendees/?page=1&page_size=50",
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        const data = await response.json();
+        console.log("Fetched attendees:", data); // Log the fetched data
+        setAttendee(data.data || []);
+      } catch (error) {
+        console.error("Error fetching Attendee:", error);
+      }
+    };
+
+    atttendeeData();
+  }, []);
   return (
     <div className="attendee-content">
       <div className="top-content">
@@ -44,10 +55,6 @@ function Attendees_details() {
         <div className="avatar"></div>
       </div>
 
-      {/* <div className="card">
-        <h3>Last Friday Hangout</h3>
-        <h4>40</h4>
-      </div> */}
       <div className="collected-details">
         <div className="headers">
           {headers.map((head, id) => {
@@ -60,23 +67,21 @@ function Attendees_details() {
         </div>
         <div className="attendee-details">
           <div className="details">
-            {
-              CollectedDetails.map((detail, id) =>{
-                return(
-                  <div className="detail" key={id}>
-                     <h3>{detail.name}</h3>
-                    <h3>{detail.gender}</h3>
-                    <h3>{detail.number}</h3>
-                    <h3>{detail.place}</h3>
-                    <h3>{detail.school}</h3>
-                    <h3>{detail.work}</h3>
-                    <h3>{detail.hear}</h3>
-                    <h3 className="update">{detail.upadtes}</h3>
-                    <h3 className="interest">{detail.interest}</h3>
-                  </div>
-                )
-              })
-            }
+            {attendee.map((attendee, id) => {
+              return (
+                <div className="detail" key={id}>
+                  <div>{attendee.name}</div>
+                  <div>{attendee.sex}</div>
+                  <div>{attendee.phone_number}</div>
+                  <div>{attendee.resident}</div>
+                  <div>{attendee.school}</div>
+                  <div>{attendee.position}</div>
+                  <div>{attendee.ad}</div>
+                  <div>{attendee.sms_alert}</div>
+                  <div>{attendee.interest}</div>
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>

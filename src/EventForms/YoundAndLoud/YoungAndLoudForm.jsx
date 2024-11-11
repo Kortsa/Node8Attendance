@@ -23,7 +23,7 @@ const YoungAndLoudForm = () => {
     setErrors((prevErrors) => ({ ...prevErrors, [name]: "" })); // Clear error on change
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     let newErrors = {};
     Object.keys(formData).forEach((key) => {
@@ -34,20 +34,45 @@ const YoungAndLoudForm = () => {
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
     } else {
-      // Handle form submission logic here
-      console.log("Form submitted with data:", formData);
-      // Reset form fields
-      setFormData({
-        name: "",
-        sex: "",
-        place: "",
-        phone: "",
-        schoolLevel: "",
-        work: "",
-        heardFrom: "",
-        interest: "",
-        receiveUpdates: "",
-      });
+      try {
+        const response = await fetch(
+          "https://timesync-backend-production.up.railway.app/attendees/create",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(formData),
+          }
+        );
+        const data = await response.json();
+        console.log("Response data:", data);
+
+        if (response.ok) {
+          alert("Form submitted successfully!");
+          // Reset form fields
+          setFormData({
+            name: "",
+            sex: "",
+            place: "",
+            phone: "",
+            schoolLevel: "",
+            work: "",
+            heardFrom: "",
+            interest: "",
+            receiveUpdates: "",
+          });
+        } else {
+          alert(
+            `Failed to submit form. Server responded with: ${
+              data.message || response.statusText
+            }`
+          );
+        }
+      } catch (error) {
+        console.error("Error submitting form:", error);
+        alert("An error occurred. Please try again.");
+      }
     }
   };
 
