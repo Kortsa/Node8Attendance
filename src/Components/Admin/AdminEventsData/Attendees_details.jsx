@@ -74,7 +74,7 @@ function Attendees_details() {
                   <div>{attendee.sex}</div>
                   <div>{attendee.phone_number}</div>
                   <div>{attendee.resident}</div>
-                  <div>{attendee.school}</div>
+                  <div>{attendee.school_level}</div>
                   <div>{attendee.position}</div>
                   <div>{attendee.ad}</div>
                   <div>{attendee.sms_alert}</div>
