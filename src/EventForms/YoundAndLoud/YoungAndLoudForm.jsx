@@ -15,21 +15,54 @@ const YoungAndLoudForm = () => {
     ad: "",
     interest: "",
     sms_alert: "",
+    other_position: "",
+    other_ad: "",
+    other_interest: "",
   });
   const [errors, setErrors] = useState({});
+  const [showOtherPosition, setShowOtherPosition] = useState(false);
+  const [showOtherAd, setShowOtherAd] = useState(false);
+  const [showOtherInterest, setShowOtherInterest] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevState) => ({ ...prevState, [name]: value }));
     setErrors((prevErrors) => ({ ...prevErrors, [name]: "" })); // Clear error on change
+
+    if (name === "position" && value === "Others") {
+      setShowOtherPosition(true);
+    } else if (name === "position") {
+      setShowOtherPosition(false);
+    }
+
+    if (name === "ad" && value === "Others") {
+      setShowOtherAd(true);
+    } else if (name === "ad") {
+      setShowOtherAd(false);
+    }
+
+    if (name === "interest" && value === "Others") {
+      setShowOtherInterest(true);
+    } else if (name === "interest") {
+      setShowOtherInterest(false);
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     let newErrors = {};
     Object.keys(formData).forEach((key) => {
-      if (!formData[key] && key !== "phone_number") {
-        newErrors[key] = "This field is required";
+      if (
+        !formData[key] &&
+        key !== "phone_number" &&
+        key !== "name" &&
+        key !== "school_level" &&
+        key !== "position" &&
+        key !== "other_position" &&
+        key !== "other_ad" &&
+        key !== "other_interest"
+      ) {
+        newErrors[key] = `${key.replace("_", " ")} is required`;
       }
     });
     if (Object.keys(newErrors).length > 0) {
@@ -67,6 +100,9 @@ const YoungAndLoudForm = () => {
             ad: "",
             interest: "",
             sms_alert: "",
+            other_position: "",
+            other_ad: "",
+            other_interest: "",
           });
         } else {
           Swal.fire({
@@ -77,7 +113,7 @@ const YoungAndLoudForm = () => {
           });
         }
       } catch (error) {
-        console.error("Error submitting form:", error);
+        // console.error("Error submitting form:", error);
         Swal.fire({
           title: "Error!",
           text: "An error occurred. Please try again.",
@@ -99,9 +135,7 @@ const YoungAndLoudForm = () => {
         <h2>Provide your Details below</h2>
         <form onSubmit={handleSubmit} className="form_content">
           <div className="content name">
-            <label>
-              Name <span>*</span>
-            </label>
+            <label>First Name</label>
             <input
               type="text"
               name="name"
@@ -109,7 +143,6 @@ const YoungAndLoudForm = () => {
               onChange={handleChange}
               placeholder="Enter your full name ..."
               className="inputField"
-              required
             />
             {errors.name && <p className="error-text">{errors.name}</p>}
           </div>
@@ -178,14 +211,22 @@ const YoungAndLoudForm = () => {
               className="inputField"
             >
               <option value="">Select one</option>
-              <option value="Apprentice">Apprentice</option>
               <option value="Keke Driver">Keke Driver</option>
+              <option value="bike Driver">Bike Driver</option>
               <option value="Trader">Trader</option>
-              <option value="Teacher">Teacher</option>
-              <option value="Banker">Banker</option>
+              <option value="Teacher">Unemployed</option>
               <option value="Others">Others</option>
             </select>
             {errors.position && <p className="error-text">{errors.position}</p>}
+            {showOtherPosition && (
+              <input
+                type="text"
+                name="other_position"
+                value={formData.other_position}
+                onChange={handleChange}
+                placeholder="Please specify"
+              />
+            )}
           </div>
           <div className="content">
             <label>How did you hear of the festival</label>
@@ -201,9 +242,19 @@ const YoungAndLoudForm = () => {
               <option value="Instagram">Instagram</option>
               <option value="Facebook">Facebook</option>
               <option value="Friends">Friends</option>
+              <option value="Flyers">Flyers in town</option>
               <option value="Others">Others</option>
             </select>
             {errors.ad && <p className="error-text">{errors.ad}</p>}
+            {showOtherAd && (
+              <input
+                type="text"
+                name="other_ad"
+                value={formData.other_ad}
+                onChange={handleChange}
+                placeholder="Please specify"
+              />
+            )}
           </div>
           <div className="content school">
             <label>Which part of the festival are you most interested in</label>
@@ -220,8 +271,18 @@ const YoungAndLoudForm = () => {
               <option value="Skating">Skating</option>
               <option value="Talent Contest">Talent Contest</option>
               <option value="All">All</option>
+              <option value="Others">Others</option>
             </select>
             {errors.interest && <p className="error-text">{errors.interest}</p>}
+            {showOtherInterest && (
+              <input
+                type="text"
+                name="other_interest"
+                value={formData.other_interest}
+                onChange={handleChange}
+                placeholder="Please specify"
+              />
+            )}
           </div>
           <div className="content school">
             <label>
