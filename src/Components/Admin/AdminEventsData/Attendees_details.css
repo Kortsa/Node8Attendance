@@ -3,6 +3,26 @@
   width: 100%;
 }
 
+.attendee-content .top-content .exportBtn {
+  background-color: white;
+  border: 1px solid #f15e1c;
+  width: 5rem;
+  padding: 1rem;
+  box-shadow: 1px 1px 10px 1px rgba(0, 0, 0, 0.1);
+  margin: 2rem;
+  margin-left: 0;
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.attendee-content .top-content .exportBtn h1 {
+  font-size: 1rem;
+  text-align: center;
+}
+
 .attendee-content .search_container {
   width: 60%;
   margin: 2rem auto;
@@ -66,5 +86,3 @@
   width: 10%;
   text-align: center;
 }
-
-

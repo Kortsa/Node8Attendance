@@ -7,12 +7,16 @@ import "../Visitors/Events.css";
 const Events = () => {
   const [startIndex, setStartIndex] = useState(0);
   const [events, setEvents] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchEvents = async () => {
+      setLoading(true);
       try {
         const response = await fetch(
-          "https://timesync-backend-production.up.railway.app/events/?page=1&page_size=50",
+          `https://timesync-backend-production.up.railway.app/events/?page=${
+            Math.floor(startIndex / 4) + 1
+          }&page_size=4`,
           {
             method: "GET",
             headers: {
@@ -21,15 +25,17 @@ const Events = () => {
           }
         );
         const data = await response.json();
-        console.log("Fetched data:", data); // Log the fetched data
+        // console.log("Fetched data:", data); // Log the fetched data
         setEvents(data.data || []);
       } catch (error) {
         console.error("Error fetching events:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchEvents();
-  }, []);
+  }, [startIndex]);
 
   const showMoreCards = () => {
     if (startIndex + 4 < events.length) {
@@ -61,33 +67,27 @@ const Events = () => {
             <img src={searchIcon} alt="" />
           </span>
         </div>
-
         <div className="events_Cards">
-          {events.length === 0 ? (
+          {loading ? (
+            <div className="loading">
+              <p>Loading events...</p>
+            </div>
+          ) : events.length === 0 ? (
             <div className="no-events">
               <p>No events available here</p>
             </div>
           ) : (
             events.slice(startIndex, startIndex + 4).map((event, id) => (
-              <Link key={id} to={event.to || "/young_loud_form"} className="event_card">
+              <Link
+                key={id}
+                to={event.to || "/young_loud_form"}
+                className="event_card"
+              >
                 {event.name}
               </Link>
             ))
           )}
         </div>
-
-        {/* <div className="button_container">
-          {startIndex > 0 && (
-            <div className="btn" onClick={showPreviousCards}>
-              Previous
-            </div>
-          )}
-          {startIndex + 4 < events.length && (
-            <div className="btn" onClick={showMoreCards}>
-              View More
-            </div>
-          )}
-        </div> */}
       </div>
     </div>
   );

@@ -139,14 +139,15 @@ const YoungAndLoudForm = () => {
         <div className="content name">
             <label>Age</label>
             <input
-              type="text"
+              type="number"
               name="age"
               value={formData.age}
               onChange={handleChange}
               placeholder="Enter your age ..."
               className="inputField"
+              // required
             />
-            {errors.name && <p className="error-text">{errors.name}</p>}
+            {errors.age && <p className="error-text">{errors.age}</p>}
           </div>
           <div className="content name">
             <label>First Name</label>
@@ -169,7 +170,7 @@ const YoungAndLoudForm = () => {
               value={formData.sex}
               onChange={handleChange}
               className="inputField"
-              required
+             
             >
               <option value="">Select your sex</option>
               <option value="male">Male</option>
@@ -191,7 +192,7 @@ const YoungAndLoudForm = () => {
           <div className="content place">
             <label>Phone number</label>
             <input
-              type="text"
+              type="number"
               name="phone_number"
               value={formData.phone_number}
               onChange={handleChange}
