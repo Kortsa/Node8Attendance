@@ -50,7 +50,6 @@ const YoungAndLoudForm = () => {
         // console.log("Response data:", data);
 
         if (response.ok) {
-         
           Swal.fire({
             title: "Success!",
             text: "Form submitted successfully!",
@@ -143,7 +142,7 @@ const YoungAndLoudForm = () => {
             {errors.resident && <p className="error-text">{errors.resident}</p>}
           </div>
           <div className="content place">
-            <label>Phone number (optional)</label>
+            <label>Phone number</label>
             <input
               type="text"
               name="phone_number"
