@@ -6,6 +6,7 @@ import "../YoundAndLoud/YoundAndLoudForm.css";
 
 const YoungAndLoudForm = () => {
   const [formData, setFormData] = useState({
+    age:"",
     name: "",
     sex: "",
     resident: "",
@@ -91,6 +92,7 @@ const YoungAndLoudForm = () => {
           });
           // Reset form fields
           setFormData({
+            age:"",
             name: "",
             sex: "",
             resident: "",
@@ -134,6 +136,18 @@ const YoungAndLoudForm = () => {
       <div className="form_card">
         <h2>Provide your Details below</h2>
         <form onSubmit={handleSubmit} className="form_content">
+        <div className="content name">
+            <label>Age</label>
+            <input
+              type="text"
+              name="age"
+              value={formData.age}
+              onChange={handleChange}
+              placeholder="Enter your age ..."
+              className="inputField"
+            />
+            {errors.name && <p className="error-text">{errors.name}</p>}
+          </div>
           <div className="content name">
             <label>First Name</label>
             <input
