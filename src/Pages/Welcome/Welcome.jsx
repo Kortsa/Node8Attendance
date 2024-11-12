@@ -122,7 +122,7 @@ const Welcome = () => {
 
           <a>Forget Password</a>
           <button type="submit" className="btn" disabled={loading}>
-            {loading ? "Please wait.. logging in" : "Login"}
+            {loading ? "Please wait... logging in" : "Login"}
           </button>
         </form>
       </Modal>

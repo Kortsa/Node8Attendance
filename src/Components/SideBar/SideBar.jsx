@@ -59,7 +59,7 @@ function SideBar() {
         }
       );
       const data = await response.json();
-      console.log("Fetched data:", data); // Log the fetched data
+      // console.log("Fetched data:", data); // Log the fetched data
       setEvents(data.data || []);
     } catch (error) {
       console.error("Error fetching events:", error);

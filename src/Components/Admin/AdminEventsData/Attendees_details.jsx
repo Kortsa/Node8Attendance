@@ -30,7 +30,7 @@ function Attendees_details() {
           }
         );
         const data = await response.json();
-        console.log("Fetched attendees:", data); // Log the fetched data
+        // console.log("Fetched attendees:", data); // Log the fetched data
         setAttendee(data.data || []);
       } catch (error) {
         console.error("Error fetching Attendee:", error);
@@ -77,7 +77,10 @@ function Attendees_details() {
                   <div>{attendee.school_level}</div>
                   <div>{attendee.position}</div>
                   <div>{attendee.ad}</div>
-                  <div>{attendee.sms_alert}</div>
+                  {/* <div>{attendee.sms_alert}</div> */}
+                  <div className="data-cell">
+                    {attendee.sms_alert ? "Yes" : "No"}
+                  </div>
                   <div>{attendee.interest}</div>
                 </div>
               );
