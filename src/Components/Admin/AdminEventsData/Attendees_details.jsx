@@ -19,6 +19,8 @@ const headers = [
 
 function Attendees_details() {
   const [attendee, setAttendee] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const attendeesPerPage = 10;
 
   useEffect(() => {
     const atttendeeData = async () => {
@@ -42,11 +44,32 @@ function Attendees_details() {
     atttendeeData();
   }, []);
 
+  const indexOfLastAttendee = currentPage * attendeesPerPage;
+  const indexOfFirstAttendee = indexOfLastAttendee - attendeesPerPage;
+  const currentAttendees = attendee.slice(
+    indexOfFirstAttendee,
+    indexOfLastAttendee
+  );
+
   const csvData = attendee.map((attendee, index) => ({
     number: index + 1,
     ...attendee,
     sms_alert: attendee.sms_alert ? "Yes" : "No",
   }));
+
+  const totalPages = Math.ceil(attendee.length / attendeesPerPage);
+
+  const nextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const prevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
 
   return (
     <div className="attendee-content">
@@ -79,9 +102,9 @@ function Attendees_details() {
         </div>
         <div className="attendee-details">
           <div className="details">
-            {attendee.map((attendee, index) => (
+            {currentAttendees.map((attendee, index) => (
               <div className="detail" key={index}>
-                <div>{index + 1}</div>
+                <div>{indexOfFirstAttendee + index + 1}</div>
                 <div>{attendee.name}</div>
                 <div>{attendee.age}</div>
                 <div>{attendee.sex}</div>
@@ -98,6 +121,22 @@ function Attendees_details() {
             ))}
           </div>
         </div>
+      </div>
+      <div className="pagination">
+        <button
+          onClick={prevPage}
+          disabled={currentPage === 1}
+          className="pagination-btn"
+        >
+          Previous
+        </button>
+        <button
+          onClick={nextPage}
+          disabled={currentPage === totalPages}
+          className="pagination-btn"
+        >
+          Next
+        </button>
       </div>
     </div>
   );

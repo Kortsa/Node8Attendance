@@ -6,7 +6,7 @@ import "../YoundAndLoud/YoundAndLoudForm.css";
 
 const YoungAndLoudForm = () => {
   const [formData, setFormData] = useState({
-    age:"",
+    age: "",
     name: "",
     sex: "",
     resident: "",
@@ -69,6 +69,18 @@ const YoungAndLoudForm = () => {
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
     } else {
+      // Replace "Others" with actual input values
+      const submissionData = { ...formData };
+      if (submissionData.position === "Others") {
+        submissionData.position = submissionData.other_position;
+      }
+      if (submissionData.ad === "Others") {
+        submissionData.ad = submissionData.other_ad;
+      }
+      if (submissionData.interest === "Others") {
+        submissionData.interest = submissionData.other_interest;
+      }
+
       try {
         const response = await fetch(
           "https://timesync-backend-production.up.railway.app/attendees/create",
@@ -77,7 +89,8 @@ const YoungAndLoudForm = () => {
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify(formData),
+            // body: JSON.stringify(formData),
+            body: JSON.stringify(submissionData),
           }
         );
         const data = await response.json();
@@ -92,7 +105,7 @@ const YoungAndLoudForm = () => {
           });
           // Reset form fields
           setFormData({
-            age:"",
+            age: "",
             name: "",
             sex: "",
             resident: "",
@@ -136,19 +149,6 @@ const YoungAndLoudForm = () => {
       <div className="form_card">
         <h2>Provide your Details below</h2>
         <form onSubmit={handleSubmit} className="form_content">
-        <div className="content name">
-            <label>Age</label>
-            <input
-              type="number"
-              name="age"
-              value={formData.age}
-              onChange={handleChange}
-              placeholder="Enter your age ..."
-              className="inputField"
-              // required
-            />
-            {errors.age && <p className="error-text">{errors.age}</p>}
-          </div>
           <div className="content name">
             <label>First Name</label>
             <input
@@ -161,6 +161,19 @@ const YoungAndLoudForm = () => {
             />
             {errors.name && <p className="error-text">{errors.name}</p>}
           </div>
+          <div className="content name">
+            <label>Age</label>
+            <input
+              type="number"
+              name="age"
+              value={formData.age}
+              onChange={handleChange}
+              placeholder="Enter your age ..."
+              className="inputField"
+            />
+            {errors.age && <p className="error-text">{errors.age}</p>}
+          </div>
+
           <div className="content sex">
             <label>
               Sex <span>*</span>
@@ -170,7 +183,6 @@ const YoungAndLoudForm = () => {
               value={formData.sex}
               onChange={handleChange}
               className="inputField"
-             
             >
               <option value="">Select your sex</option>
               <option value="male">Male</option>
@@ -269,8 +281,11 @@ const YoungAndLoudForm = () => {
                 onChange={handleChange}
                 placeholder="Please specify"
               />
+              
             )}
+            {errors.other_ad && <p className="error-text">{errors.other_ad}</p>}
           </div>
+
           <div className="content school">
             <label>Which part of the festival are you most interested in</label>
             <select
