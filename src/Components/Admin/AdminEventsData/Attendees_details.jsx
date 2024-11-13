@@ -20,7 +20,7 @@ const headers = [
 function Attendees_details() {
   const [attendee, setAttendee] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const attendeesPerPage = 10;
+  const attendeesPerPage = 20;
 
   useEffect(() => {
     const atttendeeData = async () => {

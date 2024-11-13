@@ -162,7 +162,7 @@ const YoungAndLoudForm = () => {
             {errors.name && <p className="error-text">{errors.name}</p>}
           </div>
           <div className="content name">
-            <label>Age</label>
+            <label>Age <span>*</span></label>
             <input
               type="number"
               name="age"
@@ -191,7 +191,7 @@ const YoungAndLoudForm = () => {
             {errors.sex && <p className="error-text">{errors.sex}</p>}
           </div>
           <div className="content place">
-            <label>Place of residence</label>
+            <label>Place of residence <span>*</span></label>
             <input
               type="text"
               name="resident"
@@ -256,7 +256,7 @@ const YoungAndLoudForm = () => {
             )}
           </div>
           <div className="content">
-            <label>How did you hear of the festival</label>
+            <label>How did you hear of the festival <span>*</span></label>
             <select
               name="ad"
               value={formData.ad}
@@ -287,7 +287,7 @@ const YoungAndLoudForm = () => {
           </div>
 
           <div className="content school">
-            <label>Which part of the festival are you most interested in</label>
+            <label>Which part of the festival are you most interested in <span>*</span></label>
             <select
               name="interest"
               value={formData.interest}
@@ -317,7 +317,7 @@ const YoungAndLoudForm = () => {
           <div className="content school">
             <label>
               Will you like to receive updates on the Young and Loud festival
-              and Young and Safe Project in general via sms
+              and Young and Safe Project in general via sms <span>*</span>
             </label>
             <select
               name="sms_alert"
