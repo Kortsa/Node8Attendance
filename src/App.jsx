@@ -13,7 +13,7 @@ function App() {
         <Route path="/" element={<Welcome />} />
         <Route path="/events" element={ <Events /> } />
         <Route path="/young_loud_form" element={ <YoungAndLoudForm /> } />
-        <Route path="/admin/home" element={ <AdminHome /> } />
+        <Route path="/mel-attendees/y&l-16-11-2024" element={ <AdminHome /> } />
         {/* <Route path="/attendees-details" element={<Attendees_details/>  }/> */}
       </Routes>
      

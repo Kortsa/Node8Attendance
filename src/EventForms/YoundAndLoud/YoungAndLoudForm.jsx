@@ -162,7 +162,9 @@ const YoungAndLoudForm = () => {
             {errors.name && <p className="error-text">{errors.name}</p>}
           </div>
           <div className="content name">
-            <label>Age <span>*</span></label>
+            <label>
+              Age <span>*</span>
+            </label>
             <input
               type="number"
               name="age"
@@ -191,7 +193,9 @@ const YoungAndLoudForm = () => {
             {errors.sex && <p className="error-text">{errors.sex}</p>}
           </div>
           <div className="content place">
-            <label>Place of residence <span>*</span></label>
+            <label>
+              Place of residence <span>*</span>
+            </label>
             <input
               type="text"
               name="resident"
@@ -256,7 +260,9 @@ const YoungAndLoudForm = () => {
             )}
           </div>
           <div className="content">
-            <label>How did you hear of the festival <span>*</span></label>
+            <label>
+              How did you hear of the festival <span>*</span>
+            </label>
             <select
               name="ad"
               value={formData.ad}
@@ -281,13 +287,15 @@ const YoungAndLoudForm = () => {
                 onChange={handleChange}
                 placeholder="Please specify"
               />
-              
             )}
             {errors.other_ad && <p className="error-text">{errors.other_ad}</p>}
           </div>
 
           <div className="content school">
-            <label>Which part of the festival are you most interested in <span>*</span></label>
+            <label>
+              Which part of the festival are you most interested in{" "}
+              <span>*</span>
+            </label>
             <select
               name="interest"
               value={formData.interest}
@@ -296,6 +304,7 @@ const YoungAndLoudForm = () => {
             >
               <option value="">Select one</option>
               <option value="Artist Performance">Artist Performance</option>
+              <option value="Live Painting">Homeboyz Performance</option>
               <option value="Live Painting">Live Painting</option>
               <option value="Street Games">Street Games</option>
               <option value="Skating">Skating</option>

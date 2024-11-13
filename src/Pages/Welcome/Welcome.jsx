@@ -34,7 +34,7 @@ const Welcome = () => {
     e.preventDefault();
     setLoading(true);
     setTimeout(() => {
-      if (email === "admin@nodeeight" && password === "randomBytes") {
+      if (email === "research@nodeeight.org" && password === "CICO!&2024") {
         setLoading(false);
         Swal.fire({
           title: "Tym Sync",
@@ -45,7 +45,7 @@ const Welcome = () => {
             text: "font-quicksand",
           },
         });
-        navigate("/admin/home");
+        navigate("/mel-attendees/y&l-16-11-2024");
       } else {
         Swal.fire({
           title: "Tym Sync",
@@ -70,7 +70,7 @@ const Welcome = () => {
     <>
       <div className="contents">
         <div className="logo">
-          <Link to="/"> 
+          <Link to="/">
             <img src={logo} alt="" />
           </Link>
         </div>
