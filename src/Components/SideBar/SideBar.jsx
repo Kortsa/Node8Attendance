@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Modal from "react-modal";
 import Students from "../../assets/Group3.png";
 import Events from "../../assets/Group36.png";
@@ -7,6 +7,7 @@ import Visitors from "../../assets/Group.png";
 import Employee from "../../assets/employees.png";
 import AddIcon from "../../assets/add.png";
 import logout from "../../assets/icons.png";
+import warning from "../../assets/warning.png";
 import { Outlet } from "react-router-dom";
 import { useState } from "react";
 import "../SideBar/SideBar.css";
@@ -30,7 +31,6 @@ const tabs = [
   {
     name: "Events",
     icon: Events,
-    // to: "/attendees-details",
     to: "",
     icon2: AddIcon,
   },
@@ -38,6 +38,8 @@ const tabs = [
 
 function SideBar() {
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [logoutIsOpen, setlogoutIsOpen] = useState(false);
+  const navigate = useNavigate();
   const [newEvent, setNewEvent] = useState({
     name: "",
     date: "",
@@ -46,6 +48,12 @@ function SideBar() {
   });
 
   const [events, setEvents] = useState([]);
+
+  const handleLogout = () => {
+    navigate("/");
+  };
+
+ 
 
   const fetchEvents = async () => {
     try {
@@ -68,12 +76,23 @@ function SideBar() {
   useEffect(() => {
     fetchEvents();
   }, []);
+
   const openModal = () => {
     setModalIsOpen(true);
   };
+
   const closeModal = () => {
     setModalIsOpen(false);
   };
+
+  const openlogoutModal = () => {
+    setlogoutIsOpen(true);
+  };
+
+  const closelogoutModal = () => {
+    setlogoutIsOpen(false);
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setNewEvent((prevEvent) => ({
@@ -149,10 +168,16 @@ function SideBar() {
             );
           })}
 
-          <Link to="/" className="logout">
+          <div
+            className="logout"
+            onClick={(e) => {
+              // e.preventDefault();
+              openlogoutModal();
+            }}
+          >
             <img src={logout} alt="" />
             Log Out
-          </Link>
+          </div>
         </div>
       </div>
 
@@ -217,6 +242,28 @@ function SideBar() {
           </button>
         </form>
       </Modal>
+
+      <Modal
+        isOpen={logoutIsOpen}
+        onRequestClose={closelogoutModal}
+        // contentLabel="Add Event Modal"
+        className="logout-modal modal"
+        overlayClassName="overlay"
+      >
+        <h2>Do you want to logout?</h2>
+        <div className="warning-img">
+          <img src={warning} alt="" />
+        </div>
+        <div className="logout-options">
+          <button className="btn yes" onClick={handleLogout}>
+            Yes
+          </button>
+          <button className="btn no" onClick={closelogoutModal}>
+            No
+          </button>
+        </div>
+      </Modal>
+
       <Outlet />
     </>
   );

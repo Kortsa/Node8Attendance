@@ -120,7 +120,7 @@ const Welcome = () => {
             />
           </div>
 
-          <a>Forget Password</a>
+          {/* <a>Forget Password</a> */}
           <button type="submit" className="btn" disabled={loading}>
             {loading ? "Please wait... logging in" : "Login"}
           </button>

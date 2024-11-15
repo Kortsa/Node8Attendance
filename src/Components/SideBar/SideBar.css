@@ -22,12 +22,11 @@
   display: flex;
   align-items: center;
   color: black;
-  
 }
 
 .sidebar_content .tab img {
-  height: 2.5rem;
-  width: 2.5rem;
+  height: 2rem;
+  width: 2rem;
   margin-right: 1rem;
 }
 
@@ -101,20 +100,57 @@
   margin-bottom: 2rem;
 }
 
-.sidebar_content .logout{
+.sidebar_content .logout {
+  display: flex;
+  align-items: center;
+  color: black;
+  font-size: 1.5rem;
+  width: 100%;
+  /* background-color: red; */
+  margin-top: 5rem;
+  cursor: pointer;
+}
+
+.sidebar_content .logout img {
+  height: 2rem;
+  width: 2rem;
+  margin-right: 1rem;
+}
+
+.logout-modal .warning-img{
+  margin-top: 5rem;
+}
+
+.logout-modal .warning-img img{
+  height: 5rem;
+  width: 5rem;
+}
+
+.logout-modal .logout-options {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-top: 5rem;
+}
+
+.logout-modal .logout-options .btn {
+  margin: auto;
+  width: 30%;
+  padding: 0.7rem;
+  background-color: red;
+  border-radius: 0.7rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: black;
-  font-size: 1.5rem;
-  text-align: center;
-  width: auto;
-  width: 100%;
+  font-size: 1.2rem;
+  color: #fff;
+  cursor: pointer;
  
+  margin-bottom: 2rem;
 }
 
-.sidebar_content .logout img{
-  height: 2rem;
-  width: 2rem ;
-  margin-right: 1rem;
+.logout-modal .logout-options .no{
+  background-color: rgb(85, 84, 84);
+  color: white;
 }
