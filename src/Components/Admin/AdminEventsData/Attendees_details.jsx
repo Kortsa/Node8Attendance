@@ -23,25 +23,34 @@ function Attendees_details() {
   const attendeesPerPage = 20;
 
   useEffect(() => {
-    const atttendeeData = async () => {
+    const fetchAllAttendees = async () => {
+      let allAttendees = [];
+      let page = 1;
+      let totalPages = 1;
+
       try {
-        const response = await fetch(
-          "https://timesync-backend-production.up.railway.app/attendees/?page=1&page_size=50",
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
-        const data = await response.json();
-        setAttendee(data.data || []);
+        while (page <= totalPages) {
+          const response = await fetch(
+            `https://timesync-backend-production.up.railway.app/attendees/?page=${page}&page_size=50`,
+            {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
+          const data = await response.json();
+          allAttendees = allAttendees.concat(data.data || []);
+          totalPages = data.meta.num_of_pages;
+          page++;
+        }
+        setAttendee(allAttendees);
       } catch (error) {
         console.error("Error fetching Attendee:", error);
       }
     };
 
-    atttendeeData();
+    fetchAllAttendees();
   }, []);
 
   const indexOfLastAttendee = currentPage * attendeesPerPage;
