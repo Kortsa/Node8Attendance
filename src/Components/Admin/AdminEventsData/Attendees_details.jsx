@@ -93,11 +93,26 @@ function Attendees_details() {
             <img src={searchIcon} alt="" />
           </span>
         </div>
-        <div className="avatar"></div>
-        <div className="exportBtn">
-          <CSVLink data={csvData} headers={headers} filename={"attendees.csv"}>
-            <h1> Export</h1>
-          </CSVLink>
+        {/* <div className="avatar"></div> */}
+        <div className="event_cards">
+          <div className="card">Young and Loud <br></br>  {attendee.length} </div>
+          <div className="card">Node X</div>
+         
+        </div>
+        <div className="topbtns">
+          <div className="exportBtn">
+            <CSVLink
+              data={csvData}
+              headers={headers}
+              filename={"attendees.csv"}
+            >
+              <h1> Export</h1>
+            </CSVLink>
+          </div>
+
+          <div className="exportBtn att">
+            Total Attendees : {attendee.length}
+          </div>
         </div>
       </div>
 

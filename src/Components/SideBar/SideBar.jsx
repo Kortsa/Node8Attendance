@@ -53,30 +53,6 @@ function SideBar() {
     navigate("/");
   };
 
- 
-
-  const fetchEvents = async () => {
-    try {
-      const response = await fetch(
-        "https://timesync-backend-production.up.railway.app/events/?page=1&page_size=50",
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      const data = await response.json();
-      // console.log("Fetched data:", data); // Log the fetched data
-      setEvents(data.data || []);
-    } catch (error) {
-      console.error("Error fetching events:", error);
-    }
-  };
-  useEffect(() => {
-    fetchEvents();
-  }, []);
-
   const openModal = () => {
     setModalIsOpen(true);
   };
@@ -121,10 +97,6 @@ function SideBar() {
       if (res.ok) {
         // Show a success message
         alert("Event added successfully!");
-
-        // Optionally, fetch the updated list of events
-        fetchEvents();
-
         // Close the modal
         closeModal();
       } else {

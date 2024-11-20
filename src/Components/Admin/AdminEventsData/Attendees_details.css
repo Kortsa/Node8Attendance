@@ -3,10 +3,17 @@
   width: 100%;
 }
 
+.attendee-content .top-content .topbtns{
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+
 .attendee-content .top-content .exportBtn {
   background-color: white;
   border: 1px solid #f15e1c;
-  width: 5rem;
+  width: 6rem;
   padding: 1rem;
   box-shadow: 1px 1px 10px 1px rgba(0, 0, 0, 0.1);
   margin: 2rem;
@@ -16,6 +23,9 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+.attendee-content .top-content .att{
+  width: 12rem;
 }
 
 .attendee-content .top-content .exportBtn h1 {
@@ -32,6 +42,31 @@
   padding: 0.7rem;
   border-radius: 1rem;
   border: 1px solid rgb(109, 109, 109);
+}
+
+.attendee-content .event_cards{
+  display: flex;
+  justify-content: space-between;
+  width: 30%;
+}
+
+.attendee-content .event_cards .card{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* background-color: #f15e1c; */
+  padding: 0.8rem;
+  width: 10rem;
+  border-radius: 0.6rem;
+  border: 1px solid rgb(208, 203, 203);
+  font-size: 0.7rem;
+  box-shadow: 1px 1px 10px 1px rgba(0, 0, 0, 0.1);
+  font-weight: 100;
+  cursor: pointer;
+}
+.attendee-content .event_cards .card:hover{
+  background-color: #f15e1c;
+  color: white;
 }
 
 .attendee-content .search_container img {
