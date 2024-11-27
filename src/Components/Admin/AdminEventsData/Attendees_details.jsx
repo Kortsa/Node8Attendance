@@ -95,9 +95,11 @@ function Attendees_details() {
         </div>
         {/* <div className="avatar"></div> */}
         <div className="event_cards">
-          <div className="card">Young and Loud <br></br>  {attendee.length} </div>
+          <div className="card">
+            Young and Loud <br></br>
+            {attendee.length}{" "}
+          </div>
           <div className="card">Node X</div>
-         
         </div>
         <div className="topbtns">
           <div className="exportBtn">
