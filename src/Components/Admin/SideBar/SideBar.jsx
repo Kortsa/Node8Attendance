@@ -1,44 +1,23 @@
 import React, { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Modal from "react-modal";
-import Students from "../../assets/Group3.png";
-import Events from "../../assets/Group36.png";
-import Visitors from "../../assets/Group.png";
-import Employee from "../../assets/employees.png";
-import AddIcon from "../../assets/add.png";
-import logout from "../../assets/icons.png";
-import warning from "../../assets/warning.png";
+import logout from "../../../assets/icons.png";
+import warning from "../../../assets/warning.png";
+import AddIcon from "../../../assets/Add.png";
+import { RiDeleteBin6Line } from "react-icons/ri";
+import { IoToggle } from "react-icons/io5";
 import { Outlet } from "react-router-dom";
 import { useState } from "react";
-import "../SideBar/SideBar.css";
+import { AdminTabs } from "../../../constants";
+import "./SideBar.css";
 Modal.setAppElement("#root");
-const tabs = [
-  {
-    name: "Employees",
-    icon: Employee,
-    to: "",
-  },
-  {
-    name: "Students",
-    icon: Students,
-    to: "",
-  },
-  {
-    name: "Visitors",
-    icon: Visitors,
-    to: "",
-  },
-  {
-    name: "Events",
-    icon: Events,
-    to: "",
-    icon2: AddIcon,
-  },
-];
 
 function SideBar() {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [logoutIsOpen, setlogoutIsOpen] = useState(false);
+  const [formOpen, setFormOpen] = useState(false);
+  const [forms, setForms] = useState([{ id: Date.now() }]);
+
   const navigate = useNavigate();
   const [newEvent, setNewEvent] = useState({
     name: "",
@@ -53,20 +32,23 @@ function SideBar() {
     navigate("/");
   };
 
-  const openModal = () => {
-    setModalIsOpen(true);
+  // modal for form creation
+  const closeFormModal = () => {
+    setFormOpen(false);
   };
 
+  // modal for create button
   const closeModal = () => {
     setModalIsOpen(false);
   };
 
-  const openlogoutModal = () => {
-    setlogoutIsOpen(true);
-  };
-
+  // modal for logout
   const closelogoutModal = () => {
     setlogoutIsOpen(false);
+  };
+  // Function to duplicate the form
+  const duplicateForm = () => {
+    setForms([...forms, { id: Date.now() }]); // Add a new form with a unique ID
   };
 
   const handleChange = (e) => {
@@ -117,7 +99,7 @@ function SideBar() {
     <>
       <div className="sidebar_content">
         <div className="tabs">
-          {tabs.map((tab, id) => {
+          {AdminTabs.map((tab, id) => {
             return (
               <>
                 <Link key={id} to={tab.to} className="tab">
@@ -130,8 +112,7 @@ function SideBar() {
                       alt="Add icon"
                       className="add-icon"
                       onClick={(e) => {
-                        e.preventDefault();
-                        openModal();
+                        setModalIsOpen(true);
                       }}
                     />
                   )}
@@ -143,8 +124,7 @@ function SideBar() {
           <div
             className="logout"
             onClick={(e) => {
-              // e.preventDefault();
-              openlogoutModal();
+              setlogoutIsOpen(true);
             }}
           >
             <img src={logout} alt="" />
@@ -153,6 +133,7 @@ function SideBar() {
         </div>
       </div>
 
+      {/* Modal for the add events button */}
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
@@ -209,12 +190,71 @@ function SideBar() {
             </label>
           </div>
 
-          <button type="submit" className="btn">
-            Add
+          <button
+            type="submit"
+            className="btn"
+            onClick={() => setFormOpen(true)}
+          >
+            Next
           </button>
         </form>
       </Modal>
 
+      {/* modal for creation of form for an event */}
+
+      <Modal
+        isOpen={formOpen}
+        onRequestClose={closeFormModal}
+        // contentLabel="Add Event Modal"
+        className="modal form_creation"
+        overlayClassName="overlay"
+      >
+        <h1>MEETUP FORM</h1>
+        <input type="text" placeholder="Title" className="newform" />
+
+        {forms.map((form) => (
+          <form action="" className="modal_form" key={form.id}>
+            <div className="newformlabels">
+              <div className="form-creation-container">
+                <div className="top">
+                  <input
+                    type="text"
+                    placeholder="Untitled Question"
+                    className="questionInput"
+                  />
+                  <select className="select-tab">
+                    <option>Options</option>
+                    <option value="Short answers">Short answers</option>
+                    <option value="Paragraph">Paragraph</option>
+                    <option value="multiple answers">Multiple Choice</option>
+                    <option value="CheckBox">CheckBox</option>
+                  </select>
+                  <div
+                    className="form-duplicate"
+                    onClick={duplicateForm} // Duplicate form on click
+                    style={{ cursor: "pointer" }}
+                  >
+                    <img src={AddIcon} alt="Add icon" />
+                  </div>
+                </div>
+
+                <div className="bottom">
+                  <h5>Short Answers</h5>
+                  <hr />
+                  <div className="required-tab">
+                    <RiDeleteBin6Line />
+                    <h3>required</h3>
+                    <IoToggle />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        ))}
+        <button className="pagination-btn">Preview</button>
+      </Modal>
+
+      {/* modal for the logout onclick */}
       <Modal
         isOpen={logoutIsOpen}
         onRequestClose={closelogoutModal}

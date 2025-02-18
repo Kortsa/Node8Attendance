@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import logo from "../../assets/N8.png";
 import searchIcon from "../../assets/search.png";
 import { Link } from "react-router-dom";
-import "../Visitors/Events.css";
+import "./YnL.css";
 
 const Events = () => {
   const [startIndex, setStartIndex] = useState(0);
@@ -23,8 +23,7 @@ const Events = () => {
               "Content-Type": "application/json",
             },
           }
-        );
-        const data = await response.json();
+        );        const data = await response.json();
         // console.log("Fetched data:", data); // Log the fetched data
         setEvents(data.data || []);
       } catch (error) {

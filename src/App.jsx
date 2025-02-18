@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import Welcome from "./Pages/Welcome/Welcome";
-import Events from "./Pages/Visitors/Events";
+import Events from "./Pages/Events/YnL";
 import YoungAndLoudForm from "./EventForms/YoundAndLoud/YoungAndLoudForm";
 import AdminHome from "./Components/Admin/AdminHome/AdminHome";
 import Attendees_details from "./Components/Admin/AdminEventsData/Attendees_details";

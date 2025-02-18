@@ -2,20 +2,7 @@ import React, { useEffect, useState } from "react";
 import { CSVLink } from "react-csv";
 import searchIcon from "../../../assets/search.png";
 import "../AdminEventsData/Attendees_details.css";
-
-const headers = [
-  { label: "#", key: "number" },
-  { label: "Name", key: "name" },
-  { label: "Age", key: "age" },
-  { label: "Gender", key: "sex" },
-  { label: "Number", key: "phone_number" },
-  { label: "Place", key: "resident" },
-  { label: "School", key: "school_level" },
-  { label: "Work", key: "position" },
-  { label: "How did you hear", key: "ad" },
-  { label: "Updates", key: "sms_alert" },
-  { label: "Interests", key: "interest" },
-];
+import { headers } from "../../../constants";
 
 function Attendees_details() {
   const [attendee, setAttendee] = useState([]);
@@ -46,7 +33,7 @@ function Attendees_details() {
         }
         setAttendee(allAttendees);
       } catch (error) {
-        console.error("Error fetching Attendee:", error);
+        // console.error("Error fetching Attendee:", error);
       }
     };
 
@@ -99,7 +86,9 @@ function Attendees_details() {
             Young and Loud <br></br>
             {attendee.length}{" "}
           </div>
-          <div className="card">Node X</div>
+          <div className="card">
+            Node X <br></br>3
+          </div>
         </div>
         <div className="topbtns">
           <div className="exportBtn">

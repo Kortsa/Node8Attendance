@@ -117,11 +117,11 @@
   margin-right: 1rem;
 }
 
-.logout-modal .warning-img{
+.logout-modal .warning-img {
   margin-top: 5rem;
 }
 
-.logout-modal .warning-img img{
+.logout-modal .warning-img img {
   height: 5rem;
   width: 5rem;
 }
@@ -146,11 +146,129 @@
   font-size: 1.2rem;
   color: #fff;
   cursor: pointer;
- 
+
   margin-bottom: 2rem;
 }
 
-.logout-modal .logout-options .no{
+.logout-modal .logout-options .no {
   background-color: rgb(85, 84, 84);
   color: white;
+}
+
+.form_creation {
+  height: 45rem;
+  overflow-y: auto;
+  overflow-x: hidden;
+  /* scrollbar-width: thin; */
+  scroll-behavior: smooth;
+
+  
+}
+
+.modal_form .newformlabels {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 80%;
+  margin: auto;
+  scroll-behavior: smooth;
+}
+
+.newform {
+  width: 75%;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid #f15e1c;
+  margin-top: 2.7rem;
+  box-shadow: 10px 10px 10px 1px rgba(210, 208, 208, 0.5);
+}
+
+.newformlabels .newform:focus {
+  border: 1px solid #f15e1c;
+  outline: none;
+}
+
+.newformlabels .form-creation-container {
+  width: 100%;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid #f15e1c;
+  margin-top: 2.7rem;
+  box-shadow: 10px 10px 10px 1px rgba(210, 208, 208, 0.5);
+}
+
+.newformlabels .form-creation-container .top {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+}
+
+.newformlabels .form-creation-container .top .questionInput {
+  border-top: none;
+  border-right: none;
+  border-left: none;
+  border-bottom: 1px solid #f15e1c;
+}
+
+.top .questionInput:focus {
+  border: 1px solid #f15e1c;
+  outline: none;
+}
+
+.top .select-tab {
+  padding: 0.2rem;
+  border-radius: 0.5rem;
+  border: 1px solid #f15e1c;
+}
+
+.top .select-tab:focus {
+  border: 1px solid #f15e1c;
+  outline: none;
+}
+
+.top .form-duplicate {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #f15e1c;
+  border-radius: 100%;
+}
+
+.top .form-duplicate img {
+  height: 30px;
+  width: 30px;
+}
+
+.bottom h5 {
+  font-size: 1rem;
+  font-family: "Courier New", Courier, monospace;
+  font-weight: lighter;
+  margin-bottom: 0.5rem;
+}
+
+.bottom .required-tab {
+  margin-top: 5px;
+  display: flex;
+  justify-content: right;
+  align-items: center;
+}
+
+.bottom .required-tab h3 {
+  font-size: 1rem;
+  font-family: "Courier New", Courier, monospace;
+  font-weight: lighter;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+button {
+  background-color: #f15e1c;
+  width: 8rem;
+  padding: 1rem;
+  color: white;
+  border-radius: 1rem;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 5rem;
 }

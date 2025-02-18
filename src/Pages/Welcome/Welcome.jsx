@@ -34,7 +34,8 @@ const Welcome = () => {
     e.preventDefault();
     setLoading(true);
     setTimeout(() => {
-      if (email === "research@nodeeight.org" && password === "CICO!&2024") {
+      // email === "research@nodeeight.org" && password === "CICO!&2024"
+      if (email === "admin@gmail.com" && password === "admin") {
         setLoading(false);
         Swal.fire({
           title: "Tym Sync",
