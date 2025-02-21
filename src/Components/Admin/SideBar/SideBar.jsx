@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Modal from "react-modal";
 import logout from "../../../assets/icons.png";
 import warning from "../../../assets/warning.png";
-import AddIcon from "../../../assets/Add.png";
+import AddIcon from "../../../assets/add.png";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { IoToggle } from "react-icons/io5";
 import { Outlet } from "react-router-dom";
