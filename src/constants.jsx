@@ -3,8 +3,7 @@ import Events from "./assets/Group36.png";
 import Visitors from "./assets/Group.png";
 import Employee from "./assets/employees.png";
 import AddIcon from "./assets/add.png";
-import Modal from "react-modal";
-import { useState } from "react";
+
 
 export const AdminTabs = [
   {
@@ -43,3 +42,10 @@ export const headers = [
   { label: "Updates", key: "sms_alert" },
   { label: "Interests", key: "interest" },
 ];
+
+
+
+
+
+
+  

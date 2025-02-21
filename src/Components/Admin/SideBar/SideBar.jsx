@@ -16,7 +16,8 @@ function SideBar() {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [logoutIsOpen, setlogoutIsOpen] = useState(false);
   const [formOpen, setFormOpen] = useState(false);
-  const [forms, setForms] = useState([{ id: Date.now() }]);
+  // const [forms, setForms] = useState([{ id: Date.now() }]);
+  const [forms, setForms] = useState([{ id: Date.now(), isTemplate: true }]);
 
   const navigate = useNavigate();
   const [newEvent, setNewEvent] = useState({
@@ -48,7 +49,10 @@ function SideBar() {
   };
   // Function to duplicate the form
   const duplicateForm = () => {
-    setForms([...forms, { id: Date.now() }]); // Add a new form with a unique ID
+    setForms([
+      ...forms, 
+      { id: Date.now(), isTemplate: false } //set new form as template
+    ]); // Add a new form with a unique ID
   };
 
   const handleChange = (e) => {
@@ -212,7 +216,7 @@ function SideBar() {
         <h1>MEETUP FORM</h1>
         <input type="text" placeholder="Title" className="newform" />
 
-        {forms.map((form) => (
+        {forms.map((form, id) => (
           <form action="" className="modal_form" key={form.id}>
             <div className="newformlabels">
               <div className="form-creation-container">
@@ -221,21 +225,27 @@ function SideBar() {
                     type="text"
                     placeholder="Untitled Question"
                     className="questionInput"
+                    disabled={form.isTemplate} 
                   />
-                  <select className="select-tab">
+                  <select 
+                  className="select-tab" 
+                  disabled={form.isTemplate} // Disable dropdown for the template
+                  >
                     <option>Options</option>
                     <option value="Short answers">Short answers</option>
                     <option value="Paragraph">Paragraph</option>
                     <option value="multiple answers">Multiple Choice</option>
                     <option value="CheckBox">CheckBox</option>
                   </select>
-                  <div
-                    className="form-duplicate"
-                    onClick={duplicateForm} // Duplicate form on click
-                    style={{ cursor: "pointer" }}
-                  >
-                    <img src={AddIcon} alt="Add icon" />
-                  </div>
+                  {id === 0 && (
+                    <div
+                      className="form-duplicate"
+                      onClick={duplicateForm} // Duplicate form on click
+                      style={{ cursor: "pointer" }}
+                    >
+                      <img src={AddIcon} alt="Add icon" />
+                    </div>
+                  )}
                 </div>
 
                 <div className="bottom">
