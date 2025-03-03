@@ -17,7 +17,7 @@ function SideBar() {
   const [logoutIsOpen, setlogoutIsOpen] = useState(false);
   const [formOpen, setFormOpen] = useState(false);
   // const [forms, setForms] = useState([{ id: Date.now() }]);
-  const [forms, setForms] = useState([{ id: Date.now(), isTemplate: true }]);
+  const [forms, setForms] = useState([{ id: Date.now() }]);
 
   const navigate = useNavigate();
   const [newEvent, setNewEvent] = useState({
@@ -50,9 +50,9 @@ function SideBar() {
   // Function to duplicate the form
   const duplicateForm = () => {
     setForms([
-      ...forms, 
-      { id: Date.now(), isTemplate: false } //set new form as template
-    ]); // Add a new form with a unique ID
+      { id: Date.now() }, // New form added at the top
+      ...forms,
+    ]);
   };
 
   const handleChange = (e) => {
@@ -213,55 +213,59 @@ function SideBar() {
         className="modal form_creation"
         overlayClassName="overlay"
       >
-        <h1>MEETUP FORM</h1>
-        <input type="text" placeholder="Title" className="newform" />
+        <div className="form-contents">
+          <h1>MEETUP FORM</h1>
+          <input type="text" placeholder="Title" className="newform" />
+          <input type="text" placeholder="Description" className="newform" />
 
-        {forms.map((form, id) => (
-          <form action="" className="modal_form" key={form.id}>
-            <div className="newformlabels">
-              <div className="form-creation-container">
-                <div className="top">
-                  <input
-                    type="text"
-                    placeholder="Untitled Question"
-                    className="questionInput"
-                    disabled={form.isTemplate} 
-                  />
-                  <select 
-                  className="select-tab" 
-                  disabled={form.isTemplate} // Disable dropdown for the template
-                  >
-                    <option>Options</option>
-                    <option value="Short answers">Short answers</option>
-                    <option value="Paragraph">Paragraph</option>
-                    <option value="multiple answers">Multiple Choice</option>
-                    <option value="CheckBox">CheckBox</option>
-                  </select>
-                  {id === 0 && (
-                    <div
-                      className="form-duplicate"
-                      onClick={duplicateForm} // Duplicate form on click
-                      style={{ cursor: "pointer" }}
+          {forms.map((form, id) => (
+            <form action="" className="modal_form" key={form.id}>
+              <div className="newformlabels">
+                <div className="form-creation-container">
+                  <div className="top">
+                    <input
+                      type="text"
+                      placeholder="Untitled Question"
+                      className="questionInput"
+                      // disabled={form.isTemplate}
+                    />
+                    <select
+                      className="select-tab"
+                      // disabled={form.isTemplate} // Disable dropdown for the template
                     >
-                      <img src={AddIcon} alt="Add icon" />
-                    </div>
-                  )}
-                </div>
+                      <option>Options</option>
+                      <option value="Short answers">Short answers</option>
+                      <option value="Paragraph">Paragraph</option>
+                      <option value="multiple answers">Multiple Choice</option>
+                      <option value="CheckBox">CheckBox</option>
+                    </select>
 
-                <div className="bottom">
-                  <h5>Short Answers</h5>
-                  <hr />
-                  <div className="required-tab">
-                    <RiDeleteBin6Line />
-                    <h3>required</h3>
-                    <IoToggle />
+                    {id === forms.length - 1 && (
+                      <div
+                        className="form-duplicate"
+                        onClick={duplicateForm}
+                        style={{ cursor: "pointer" }}
+                      >
+                        <img src={AddIcon} alt="Add icon" />
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="bottom">
+                    <h5>Short Answers</h5>
+                    <hr />
+                    <div className="required-tab">
+                      <RiDeleteBin6Line />
+                      <h3>required</h3>
+                      <IoToggle />
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </form>
-        ))}
-        <button className="pagination-btn">Preview</button>
+            </form>
+          ))}
+          <button className="pagination-btn">Preview</button>
+        </div>
       </Modal>
 
       {/* modal for the logout onclick */}

@@ -179,11 +179,11 @@
   padding: 1rem;
   border-radius: 0.5rem;
   border: 1px solid #f15e1c;
-  margin-top: 2.7rem;
+  margin-top: 2rem;
   box-shadow: 10px 10px 10px 1px rgba(210, 208, 208, 0.5);
 }
 
-.newformlabels .newform:focus {
+ .newform:focus {
   border: 1px solid #f15e1c;
   outline: none;
 }
@@ -271,4 +271,13 @@ button {
   font-size: 1rem;
   cursor: pointer;
   margin-top: 5rem;
+  
+}
+
+.form-contents{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 80%;
+  width: 100%;
 }
