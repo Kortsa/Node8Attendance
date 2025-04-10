@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import logo from "../../assets/N8.png";
 import { apiBaseUrl } from "../../constants";
+import "./Forms.css"
+
 
 const Forms = () => {
   const { id } = useParams();

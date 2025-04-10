@@ -1,6 +1,7 @@
 import React from "react";
 import { useLocation, Link } from "react-router-dom";
 import logo from "../../../assets/N8.png";
+import "./Preview.css"
 
 function Preview() {
   const location = useLocation();
