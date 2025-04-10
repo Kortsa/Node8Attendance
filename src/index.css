@@ -8,7 +8,7 @@
 
 @font-face {
   font-family: "Nexa-Bold";
-  src: local("Nexa-Bold"), url("../public/Fonts/Nexa-Bold.otf") format("opentype");
+  src: local("Nexa-Bold"), url("Fonts/Nexa-Bold.otf") format("opentype");
   font-weight: normal;
 }
 

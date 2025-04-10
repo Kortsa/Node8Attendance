@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import logo from "../../assets/N8.png";
 import "../YoundAndLoud/YoundAndLoudForm.css";
+import { apiBaseUrl } from "../../constants";
 
 const YoungAndLoudForm = () => {
   const [formData, setFormData] = useState({
@@ -82,17 +83,14 @@ const YoungAndLoudForm = () => {
       }
 
       try {
-        const response = await fetch(
-          "https://timesync-backend-production.up.railway.app/attendees/create",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            // body: JSON.stringify(formData),
-            body: JSON.stringify(submissionData),
-          }
-        );
+        const response = await fetch(`${apiBaseUrl}/create`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          // body: JSON.stringify(formData),
+          body: JSON.stringify(submissionData),
+        });
         const data = await response.json();
         // console.log("Response data:", data);
 

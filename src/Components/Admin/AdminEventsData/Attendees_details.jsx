@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { CSVLink } from "react-csv";
 import searchIcon from "../../../assets/search.png";
 import "../AdminEventsData/Attendees_details.css";
-import { headers } from "../../../constants";
+import { headers, apiBaseUrl } from "../../../constants";
 
 function Attendees_details() {
   const [attendee, setAttendee] = useState([]);
@@ -18,7 +18,7 @@ function Attendees_details() {
       try {
         while (page <= totalPages) {
           const response = await fetch(
-            `https://timesync-backend-production.up.railway.app/attendees/?page=${page}&page_size=50`,
+            `${apiBaseUrl}/attendees/?page=${page}&page_size=50`,
             {
               method: "GET",
               headers: {

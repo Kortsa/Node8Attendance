@@ -4,24 +4,31 @@ import Visitors from "./assets/Group.png";
 import Employee from "./assets/employees.png";
 import AddIcon from "./assets/add.png";
 
+// constants.jsx
+
+export const apiBaseUrl = import.meta.env.VITE_ROOT_API_URL;
 
 export const AdminTabs = [
   {
+    id: 1,
     name: "Employees",
     icon: Employee,
     to: "",
   },
   {
+    id: 2,
     name: "Students",
     icon: Students,
     to: "",
   },
   {
+    id: 3,
     name: "Visitors",
     icon: Visitors,
     to: "",
   },
   {
+    id: 4,
     name: "Events",
     icon: Events,
     to: "",
@@ -42,10 +49,3 @@ export const headers = [
   { label: "Updates", key: "sms_alert" },
   { label: "Interests", key: "interest" },
 ];
-
-
-
-
-
-
-  

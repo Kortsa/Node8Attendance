@@ -61,6 +61,8 @@ const Welcome = () => {
         return;
       }
 
+      
+
       // After loading, navigate to the next page
       setLoading(false);
       // Navigate logic here
