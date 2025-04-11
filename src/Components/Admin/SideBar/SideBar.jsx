@@ -38,14 +38,13 @@ function SideBar() {
         name: "",
         required: false,
         type: "",
-        // deleted: false,
       },
     ], // Store meetup form questions
   });
 
-  console.log("Submitting:", JSON.stringify(newEvent, null, 2));
+  // console.log("Submitting:", JSON.stringify(newEvent, null, 2));
 
-  const [forms, setForms] = useState([{ id: Date.now() }]); // For dynamic meetup questions
+  const [forms, setForms] = useState([{ id: Date.now() }]); 
 
   const handleLogout = () => {
     navigate("/");
@@ -157,7 +156,7 @@ function SideBar() {
         body: JSON.stringify(newEvent),
       });
       const data = await res.json();
-      console.log("server response:", data);
+      // console.log("server response:", data);
 
       if (res.ok) {
         navigate("/preview", {
@@ -227,7 +226,7 @@ function SideBar() {
         <h2>Provide Details of new Events here</h2>
         <form
           className="modal_form"
-          // onSubmit={handleSubmit}
+          
         >
           <div className="labels">
             <label>
@@ -264,6 +263,7 @@ function SideBar() {
                 required
               />
             </label>
+            
             <label>
               End date*
               <input

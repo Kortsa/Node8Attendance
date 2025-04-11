@@ -10,65 +10,37 @@ function Attendees_details() {
   const [currentPage, setCurrentPage] = useState(1);
   const [events, setEvents] = useState([]);
 
-  const [selectedEvent, setSelectedEvent] = useState(null);
-  const [eventHeaders, setEventHeaders] = useState([]);
-  const [eventAttendees, setEventAttendees] = useState([]);
+
 
   const attendeesPerPage = 20;
 
-  const [formFields, setFormFields] = useState([]);
-  const [selectedEventId, setSelectedEventId] = useState(null);
-
-  const handleEventClick = async (id) => {
-    try {
-      const response = await fetch(`${apiBaseUrl}/events/${id}`);
-      const data = await response.json();
-
-      setFormFields(data.form_data || []);
-      setSelectedEventId(id);
-
-      // Fetch attendees for that specific event
-      const res = await fetch(`${apiBaseUrl}/attendees/?event_id=${id}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      const attendeeData = await res.json();
-      setAttendee(attendeeData.data || []);
-      setCurrentPage(1); // Reset pagination
-    } catch (err) {
-      console.error("Error fetching event or attendees:", err);
-    }
-  };
-
   useEffect(() => {
-    // const fetchAllAttendees = async () => {
-    //   let allAttendees = [];
-    //   let page = 1;
-    //   let totalPages = 1;
+    const fetchAllAttendees = async () => {
+      let allAttendees = [];
+      let page = 1;
+      let totalPages = 1;
 
-    //   try {
-    //     while (page <= totalPages) {
-    //       const response = await fetch(
-    //         `${apiBaseUrl}/attendees/?page=${page}&page_size=50`,
-    //         {
-    //           method: "GET",
-    //           headers: {
-    //             "Content-Type": "application/json",
-    //           },
-    //         }
-    //       );
-    //       const data = await response.json();
-    //       allAttendees = allAttendees.concat(data.data || []);
-    //       totalPages = data.meta.num_of_pages;
-    //       page++;
-    //     }
-    //     setAttendee(allAttendees);
-    //   } catch (error) {
-    //     // console.error("Error fetching Attendee:", error);
-    //   }
-    // };
+      try {
+        while (page <= totalPages) {
+          const response = await fetch(
+            `${apiBaseUrl}/attendees/?page=${page}&page_size=50`,
+            {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
+          const data = await response.json();
+          allAttendees = allAttendees.concat(data.data || []);
+          totalPages = data.meta.num_of_pages;
+          page++;
+        }
+        setAttendee(allAttendees);
+      } catch (error) {
+        // console.error("Error fetching Attendee:", error);
+      }
+    };
     const loadEvents = async () => {
       const { events: allEvents } = await AdminFetchAllEvents();
       setEvents(allEvents);
@@ -76,7 +48,7 @@ function Attendees_details() {
 
     loadEvents();
 
-    // fetchAllAttendees();
+    fetchAllAttendees();
   }, []);
 
   const indexOfLastAttendee = currentPage * attendeesPerPage;
@@ -123,15 +95,13 @@ function Attendees_details() {
         <div className="event_cards">
           <div className="card_events">
             {events.map((event, id) => (
-              <div
+              <Link
                 key={id}
-                onClick={() => handleEventClick(event.id)}
-                className={`card ${
-                  selectedEvent?.id === event.id ? "selected" : ""
-                }`}
+                // to={`/event_form/${event.id}`}
+                className="card"
               >
                 {event.name}
-              </div>
+              </Link>
             ))}
           </div>
         </div>
@@ -153,7 +123,7 @@ function Attendees_details() {
       </div>
 
       <div className="collected-details">
-        {/* <div className="headers">
+        <div className="headers">
           {headers.map((head, id) => (
             <div key={id} className="header">
               {head.label}
@@ -180,36 +150,7 @@ function Attendees_details() {
               </div>
             ))}
           </div>
-        </div> */}
-        {selectedEvent ? (
-          <>
-            <div className="headers">
-              <div className="header">#</div>
-              {formFields.map((field, id) => (
-                <div key={id} className="header">
-                  {field.label}
-                </div>
-              ))}
-            </div>
-
-            <div className="attendee-details">
-              <div className="details">
-                {currentAttendees.map((attendee, index) => (
-                  <div className="detail" key={index}>
-                    <div>{indexOfFirstAttendee + index + 1}</div>
-                    {formFields.map((field, i) => (
-                      <div key={i}>
-                        {attendee.form_values?.[field.name] || "—"}
-                      </div>
-                    ))}
-                  </div>
-                ))}
-              </div>
-            </div>
-          </>
-        ) : (
-          <p>Select an event to view its form responses.</p>
-        )}
+        </div>
       </div>
       <div className="pagination">
         <button

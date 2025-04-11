@@ -3,7 +3,7 @@ import logo from "../../assets/N8.png";
 import searchIcon from "../../assets/search.png";
 import { Link } from "react-router-dom";
 import "./YnL.css";
-import { apiBaseUrl } from "../../constants";
+import { apiBaseUrl, FetchAllEvents } from "../../constants";
 
 const Events = () => {
   const [events, setEvents] = useState([]);
@@ -12,26 +12,15 @@ const Events = () => {
   const [hasMore, setHasMore] = useState(true); // to disable "Next" when no more data
 
   useEffect(() => {
-    const fetchEvents = async () => {
+    const loadEvents = async () => {
       setLoading(true);
-      try {
-        const response = await fetch(`${apiBaseUrl}/events/?page=${page}&page_size=4`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-        const data = await response.json();
-        setEvents(data.data || []);
-        setHasMore((data.data || []).length === 4); // if less than 4, disable Next
-      } catch (error) {
-        // console.error("Error fetching events:", error);
-      } finally {
-        setLoading(false);
-      }
+      const { events: newEvents, hasMore: more } = await FetchAllEvents(page);
+      setEvents(newEvents);
+      setHasMore(more);
+      setLoading(false);
     };
 
-    fetchEvents();
+    loadEvents();
   }, [page]);
 
   const showMoreCards = () => {
@@ -74,7 +63,6 @@ const Events = () => {
             events.map((event, id) => (
               <Link
                 key={id}
-                
                 to={`/event_form/${event.id}`}
                 className="event_card"
               >
@@ -86,7 +74,11 @@ const Events = () => {
 
         {events.length > 0 && (
           <div className="pagination-controls">
-            <button className="btn" onClick={showPreviousCards} disabled={page === 1}>
+            <button
+              className="btn"
+              onClick={showPreviousCards}
+              disabled={page === 1}
+            >
               Previous
             </button>
             <button className="btn" onClick={showMoreCards} disabled={!hasMore}>

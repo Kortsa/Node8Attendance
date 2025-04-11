@@ -1,14 +1,13 @@
 .attendee-content {
   margin: 1rem;
-  width: 100%;
+  width: 78%;
 }
 
-.attendee-content .top-content .topbtns{
+.attendee-content .top-content .topbtns {
   display: flex;
   width: 100%;
   justify-content: space-between;
 }
-
 
 .attendee-content .top-content .exportBtn {
   background-color: white;
@@ -24,7 +23,7 @@
   align-items: center;
   justify-content: center;
 }
-.attendee-content .top-content .att{
+.attendee-content .top-content .att {
   width: 12rem;
 }
 
@@ -44,29 +43,46 @@
   border: 1px solid rgb(109, 109, 109);
 }
 
-.attendee-content .event_cards{
-  display: flex;
-  justify-content: space-between;
-  width: 30%;
+.attendee-content .event_cards {
+  width: 100%;
 }
 
-.attendee-content .event_cards .card{
+.attendee-content .event_cards .card_events {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  /* background-color: #f15e1c; */
-  padding: 0.8rem;
-  width: 10rem;
+  /* align-items: center; */
+  overflow-x: auto; /* Enables horizontal scrolling */
+  overflow-y: hidden; /* Prevents vertical overflow */
+  /* white-space: nowrap;     Prevents items from wrapping to next line */
+  scrollbar-width: thin; /* Thin scrollbar (for Firefox) */
+  width: 100%;
+  /* gap: 1rem;                Optional: space between cards */
+  padding-bottom: 8px;
+}
+
+.attendee-content .event_cards .card {
+  width: 12rem;
+  flex-shrink: 0;
   border-radius: 0.6rem;
   border: 1px solid rgb(208, 203, 203);
-  font-size: 0.7rem;
+  font-size: 1.2rem;
   box-shadow: 1px 1px 10px 1px rgba(0, 0, 0, 0.1);
   font-weight: 100;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.8rem;
+  margin-right: 2rem;
 }
-.attendee-content .event_cards .card:hover{
+
+.attendee-content .event_cards .card:hover {
   background-color: #f15e1c;
   color: white;
+}
+
+.card.selected {
+  border: 2px solid #007bff;
+  background-color: red;
 }
 
 .attendee-content .search_container img {
@@ -122,14 +138,14 @@
   text-align: center;
 }
 
-.attendee-content .pagination{
+.attendee-content .pagination {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-top: 2rem;
 }
 
-.attendee-content .pagination .pagination-btn{
+.attendee-content .pagination .pagination-btn {
   background-color: #f15e1c;
   width: 8rem;
   padding: 1rem;
