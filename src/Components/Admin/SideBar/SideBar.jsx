@@ -44,7 +44,7 @@ function SideBar() {
 
   // console.log("Submitting:", JSON.stringify(newEvent, null, 2));
 
-  const [forms, setForms] = useState([{ id: Date.now() }]); 
+  const [forms, setForms] = useState([{ id: Date.now() }]);
 
   const handleLogout = () => {
     navigate("/");
@@ -63,14 +63,27 @@ function SideBar() {
     setlogoutIsOpen(false);
   };
 
-  // Function to duplicate the form
   const duplicateForm = () => {
-    setForms([{ id: Date.now() }, ...forms]);
+    // Get the template (first item) data
+    const templateForm = newEvent.form_details[0];
+
+    // Don't add if the template is empty
+    if (!templateForm.name.trim()) return;
+
+    // Insert the filled template as a new form below
+    setForms((prevForms) => [
+      prevForms[0], // keep template at top
+      { id: Date.now() }, // new duplicated form
+      ...prevForms.slice(1),
+    ]);
+
     setNewEvent((prevState) => ({
       ...prevState,
       form_details: [
-        { name: "", required: false, type: "Short answers" },
-        ...prevState.form_details,
+        // Keep template at top but reset it
+        { name: "", required: false, type: "" },
+        templateForm, // insert duplicated filled one
+        ...prevState.form_details.slice(1),
       ],
     }));
   };
@@ -101,9 +114,11 @@ function SideBar() {
   };
 
   const handleDelete = (index) => {
-    // Remove the form from the state
-    const updatedForms = forms.filter((_, idx) => idx !== index);
-    setForms(updatedForms); // Update the forms state to reflect the change
+    setForms((prevForms) => prevForms.filter((_, idx) => idx !== index));
+    setNewEvent((prevState) => ({
+      ...prevState,
+      form_details: prevState.form_details.filter((_, idx) => idx !== index),
+    }));
   };
 
   const handleTypeChange = (index, newType) => {
@@ -143,6 +158,22 @@ function SideBar() {
 
     if (newEvent.form_details.some((q) => !q.name || !q.type)) {
       alert("Please fill out all fields in the meetup form.");
+      setLoading(false);
+      return;
+    }
+    console.log("Submitting event:", newEvent);
+    const formNames = new Set();
+    const hasDuplicates = newEvent.form_details.some((q) => {
+      if (!q.name || !q.type) return true;
+      if (formNames.has(q.name)) return true;
+      formNames.add(q.name);
+      return false;
+    });
+
+    if (hasDuplicates) {
+      alert(
+        "Please ensure all form questions are unique and filled out properly."
+      );
       setLoading(false);
       return;
     }
@@ -224,10 +255,7 @@ function SideBar() {
         overlayClassName="overlay"
       >
         <h2>Provide Details of new Events here</h2>
-        <form
-          className="modal_form"
-          
-        >
+        <form className="modal_form">
           <div className="labels">
             <label>
               Name of event*
@@ -263,7 +291,7 @@ function SideBar() {
                 required
               />
             </label>
-            
+
             <label>
               End date*
               <input
@@ -325,18 +353,25 @@ function SideBar() {
                       value={newEvent.form_details[id].type}
                       onChange={(e) => handleTypeChange(id, e.target.value)}
                     >
-                      <option>Options</option>
+                      <option>Select Type</option>
                       <option value="Short answers">Short answers</option>
                       <option value="Paragraph">Paragraph</option>
                       <option value="multiple answers">Multiple Choice</option>
                       <option value="CheckBox">CheckBox</option>
                     </select>
 
-                    {id === forms.length - 1 && (
+                    {id === 0 && (
                       <div
                         className="form-duplicate"
                         onClick={duplicateForm}
-                        style={{ cursor: "pointer" }}
+                        style={{
+                          cursor: newEvent.form_details[0].name.trim()
+                            ? "pointer"
+                            : "not-allowed",
+                          opacity: newEvent.form_details[0].name.trim()
+                            ? 1
+                            : 0.5,
+                        }}
                       >
                         <img src={AddIcon} alt="Add icon" />
                       </div>
@@ -347,10 +382,14 @@ function SideBar() {
                     <h5>{newEvent.form_details[id].type}</h5>
                     <hr />
                     <div className="required-tab">
-                      <RiDeleteBin6Line
-                        style={{ cursor: "pointer" }}
-                        onClick={() => handleDelete(id)}
-                      />
+                     
+                      {id !== 0 && (
+                        <RiDeleteBin6Line
+                          className="delete-icon"
+                          onClick={() => handleDelete(id)}
+                          style={{ cursor: "pointer" }}
+                        />
+                      )}
 
                       <h3>required</h3>
                       <IoToggle

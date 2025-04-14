@@ -1,7 +1,7 @@
 import React from "react";
 import { useLocation, Link } from "react-router-dom";
 import logo from "../../../assets/N8.png";
-import "./Preview.css"
+import "./Preview.css";
 
 function Preview() {
   const location = useLocation();
@@ -22,7 +22,7 @@ function Preview() {
         <div className="form_card">
           <h2>Provide your Details below</h2>
           <form className="form_content">
-            {eventData.form_data.map((q, i) => (
+            {[...eventData.form_data].reverse().map((q, i) => (
               <div key={i} className="content name">
                 <label htmlFor={q.name}>
                   {q.label}
