@@ -154,3 +154,19 @@
   font-size: 1rem;
   cursor: pointer;
 }
+.loading-indicator {
+  text-align: center;
+  padding: 2rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #555;
+}
+
+
+.detail {
+  transition: background 0.3s ease;
+}
+.detail:hover {
+  background-color: #f5f5f5;
+}
+

@@ -1,82 +1,95 @@
 import React, { useEffect, useState } from "react";
 import { CSVLink } from "react-csv";
-import { Link } from "react-router-dom";
 import searchIcon from "../../../assets/search.png";
 import "../AdminEventsData/Attendees_details.css";
 import { headers, apiBaseUrl, AdminFetchAllEvents } from "../../../constants";
+import { motion, AnimatePresence } from "framer-motion";
 
 function Attendees_details() {
   const [attendee, setAttendee] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [events, setEvents] = useState([]);
-
   const [selectedEvent, setSelectedEvent] = useState(null);
-  const [eventHeaders, setEventHeaders] = useState([]);
-  const [eventAttendees, setEventAttendees] = useState([]);
+  const [formFields, setFormFields] = useState();
+  const [loading, setLoading] = useState(false);
 
   const attendeesPerPage = 20;
 
-  const [formFields, setFormFields] = useState([]);
-  const [selectedEventId, setSelectedEventId] = useState(null);
-
-  const handleEventClick = async (id) => {
+  const handleEventClick = async (data) => {
     try {
-      const response = await fetch(`${apiBaseUrl}/events/${id}`);
-      const data = await response.json();
+      setLoading(true);
+      const response = await fetch(`${apiBaseUrl}/events/${data.id}`);
+      const evendata = await response.json();
 
-      setFormFields(data.form_data || []);
-      setSelectedEventId(id);
+      setFormFields(evendata.form_data || []);
 
-      // Fetch attendees for that specific event
-      const res = await fetch(`${apiBaseUrl}/attendees/?event_id=${id}`, {
+      setSelectedEvent(evendata);
+
+      // Use the `event.name` to fetch attendees
+      const eventName = evendata.name;
+      const sanitizedEventName = encodeURIComponent(eventName.trim());
+
+      const url = `${apiBaseUrl}/attendees/${sanitizedEventName}?page=1&page_size=50`;
+
+      const res = await fetch(url, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
         },
       });
+
       const attendeeData = await res.json();
+      // console.log(attendeeData);
+
       setAttendee(attendeeData.data || []);
-      setCurrentPage(1); // Reset pagination
+      setCurrentPage(1);
     } catch (err) {
       console.error("Error fetching event or attendees:", err);
+    } finally {
+      setLoading(false);
     }
   };
 
   useEffect(() => {
-    // const fetchAllAttendees = async () => {
-    //   let allAttendees = [];
-    //   let page = 1;
-    //   let totalPages = 1;
+    if (!selectedEvent) return;
 
-    //   try {
-    //     while (page <= totalPages) {
-    //       const response = await fetch(
-    //         `${apiBaseUrl}/attendees/?page=${page}&page_size=50`,
-    //         {
-    //           method: "GET",
-    //           headers: {
-    //             "Content-Type": "application/json",
-    //           },
-    //         }
-    //       );
-    //       const data = await response.json();
-    //       allAttendees = allAttendees.concat(data.data || []);
-    //       totalPages = data.meta.num_of_pages;
-    //       page++;
-    //     }
-    //     setAttendee(allAttendees);
-    //   } catch (error) {
-    //     // console.error("Error fetching Attendee:", error);
-    //   }
-    // };
+    const fetchAttendees = async () => {
+      const eventName = encodeURIComponent(selectedEvent.name.trim());
+      const url = `${apiBaseUrl}/attendees/${eventName}?page=1&page_size=50`;
+
+      try {
+        const res = await fetch(url, {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+        });
+
+        const data = await res.json();
+        setAttendee(data.data || []);
+      } catch (error) {
+        console.error("Polling error:", error);
+      }
+    };
+
+    fetchAttendees(); // Initial call
+
+    const interval = setInterval(() => {
+      fetchAttendees();
+    }, 15000); // Fetch every 15 seconds
+
+    return () => clearInterval(interval); // Cleanup on unmount or event change
+  }, [selectedEvent]);
+
+  useEffect(() => {
     const loadEvents = async () => {
       const { events: allEvents } = await AdminFetchAllEvents();
       setEvents(allEvents);
+      // console.log(allEvents);
+      if (allEvents.length > 0) {
+        handleEventClick(allEvents[0]); // Select first event by default
+      }
     };
 
     loadEvents();
-
-    // fetchAllAttendees();
   }, []);
 
   const indexOfLastAttendee = currentPage * attendeesPerPage;
@@ -125,7 +138,7 @@ function Attendees_details() {
             {events.map((event, id) => (
               <div
                 key={id}
-                onClick={() => handleEventClick(event.id)}
+                onClick={() => handleEventClick(event)}
                 className={`card ${
                   selectedEvent?.id === event.id ? "selected" : ""
                 }`}
@@ -151,66 +164,54 @@ function Attendees_details() {
           </div>
         </div>
       </div>
-
-      <div className="collected-details">
-        {/* <div className="headers">
-          {headers.map((head, id) => (
-            <div key={id} className="header">
-              {head.label}
-            </div>
-          ))}
-        </div>
-        <div className="attendee-details">
-          <div className="details">
-            {currentAttendees.map((attendee, index) => (
-              <div className="detail" key={index}>
-                <div>{indexOfFirstAttendee + index + 1}</div>
-                <div>{attendee.name}</div>
-                <div>{attendee.age}</div>
-                <div>{attendee.sex}</div>
-                <div>{attendee.phone_number}</div>
-                <div>{attendee.resident}</div>
-                <div>{attendee.school_level}</div>
-                <div>{attendee.position}</div>
-                <div>{attendee.ad}</div>
-                <div className="data-cell">
-                  {attendee.sms_alert ? "Yes" : "No"}
-                </div>
-                <div>{attendee.interest}</div>
-              </div>
-            ))}
-          </div>
-        </div> */}
-        {selectedEvent ? (
-          <>
-            <div className="headers">
-              <div className="header">#</div>
-              {formFields.map((field, id) => (
-                <div key={id} className="header">
-                  {field.label}
-                </div>
-              ))}
-            </div>
-
-            <div className="attendee-details">
-              <div className="details">
-                {currentAttendees.map((attendee, index) => (
-                  <div className="detail" key={index}>
-                    <div>{indexOfFirstAttendee + index + 1}</div>
-                    {formFields.map((field, i) => (
-                      <div key={i}>
-                        {attendee.form_values?.[field.name] || "—"}
-                      </div>
-                    ))}
+      {loading ? (
+        <div className="loading-indicator">Loading...</div>
+      ) : (
+        <>
+          <div className="collected-details">
+            {formFields && formFields.length > 0 && (
+              <div className="headers">
+                <div className="header">#</div>
+                {formFields.map((field, index) => (
+                  <div key={index} className="header">
+                    {field.label}
                   </div>
                 ))}
               </div>
+            )}
+
+            <div className="attendee-details">
+              <div className="details">
+                <AnimatePresence mode="wait">
+                  {currentAttendees.map((attendee, index) => (
+                    <motion.div
+                      className="detail"
+                      key={index}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -20 }}
+                      transition={{ duration: 0.5, ease: "anticipate" }}
+                    >
+                      <div>{indexOfFirstAttendee + index + 1}</div>
+                      {formFields &&
+                        formFields.map((field, idx) => (
+                          <div key={idx}>
+                            {field.type === "CheckBox"
+                              ? attendee[field.name] === true
+                                ? "Yes"
+                                : "No"
+                              : attendee[field.name] || ""}
+                          </div>
+                        ))}
+                    </motion.div>
+                  ))}
+                </AnimatePresence>
+              </div>
             </div>
-          </>
-        ) : (
-          <p>Select an event to view its form responses.</p>
-        )}
-      </div>
+          </div>
+        </>
+      )}
+
       <div className="pagination">
         <button
           onClick={prevPage}
