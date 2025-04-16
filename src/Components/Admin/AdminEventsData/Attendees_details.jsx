@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { CSVLink } from "react-csv";
 import searchIcon from "../../../assets/search.png";
 import "../AdminEventsData/Attendees_details.css";
-import { headers, apiBaseUrl, AdminFetchAllEvents } from "../../../constants";
+import { apiBaseUrl, AdminFetchAllEvents } from "../../../constants";
 import { motion, AnimatePresence } from "framer-motion";
 
 function Attendees_details() {
@@ -152,7 +152,7 @@ function Attendees_details() {
           <div className="exportBtn">
             <CSVLink
               data={csvData}
-              headers={headers}
+              // headers={headers}
               filename={"attendees.csv"}
             >
               <h1> Export</h1>
@@ -172,7 +172,7 @@ function Attendees_details() {
             {formFields && formFields.length > 0 && (
               <div className="headers">
                 <div className="header">#</div>
-                {formFields.map((field, index) => (
+                {[...formFields].reverse().map((field, index) => (
                   <div key={index} className="header">
                     {field.label}
                   </div>
@@ -193,8 +193,8 @@ function Attendees_details() {
                       transition={{ duration: 0.5, ease: "anticipate" }}
                     >
                       <div>{indexOfFirstAttendee + index + 1}</div>
-                      {formFields &&
-                        formFields.map((field, idx) => (
+                      {[...formFields &&
+                        formFields].reverse().map((field, idx) => (
                           <div key={idx}>
                             {field.type === "CheckBox"
                               ? attendee[field.name] === true

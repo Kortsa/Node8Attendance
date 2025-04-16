@@ -3,11 +3,9 @@ import Events from "./assets/Group36.png";
 import Visitors from "./assets/Group.png";
 import Employee from "./assets/employees.png";
 import AddIcon from "./assets/add.png";
-import { useState } from "react";
-
-
 
 export const apiBaseUrl = import.meta.env.VITE_ROOT_API_URL;
+
 
 export const AdminTabs = [
   {
@@ -37,19 +35,7 @@ export const AdminTabs = [
   },
 ];
 
-export const headers = [
-  { label: "#", key: "number" },
-  { label: "Name", key: "name" },
-  { label: "Age", key: "age" },
-  { label: "Gender", key: "sex" },
-  { label: "Number", key: "phone_number" },
-  { label: "Place", key: "resident" },
-  { label: "School", key: "school_level" },
-  { label: "Work", key: "position" },
-  { label: "How did you hear", key: "ad" },
-  { label: "Updates", key: "sms_alert" },
-  { label: "Interests", key: "interest" },
-];
+
 
 
 export const FetchAllEvents = async (page = 1, pageSize = 4) => {
