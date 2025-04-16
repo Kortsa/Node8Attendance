@@ -193,8 +193,9 @@ function Attendees_details() {
                       transition={{ duration: 0.5, ease: "anticipate" }}
                     >
                       <div>{indexOfFirstAttendee + index + 1}</div>
-                      {[...formFields &&
-                        formFields].reverse().map((field, idx) => (
+                      {[...(formFields && formFields)]
+                        .reverse()
+                        .map((field, idx) => (
                           <div key={idx}>
                             {field.type === "CheckBox"
                               ? attendee[field.name] === true
