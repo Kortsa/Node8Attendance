@@ -143,7 +143,8 @@ function Attendees_details() {
                   selectedEvent?.id === event.id ? "selected" : ""
                 }`}
               >
-                {event.name}
+                <h6>{event.name}</h6>
+                {/* {event.name} */}
               </div>
             ))}
           </div>

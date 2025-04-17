@@ -75,6 +75,17 @@
   margin-right: 2rem;
 }
 
+.attendee-content .event_cards .card h6{
+  width:100%;
+margin:auto;
+font-size: 0.8rem;
+text-align: center;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+}
+
 .attendee-content .event_cards .card:hover {
   background-color: #f15e1c;
   color: white;
