@@ -66,7 +66,8 @@ const Events = () => {
                 to={`/event_form/${event.id}`}
                 className="event_card"
               >
-                {event.name}
+                <h6>{event.name}</h6>
+                 
               </Link>
             ))
           )}
