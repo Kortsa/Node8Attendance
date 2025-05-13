@@ -102,7 +102,7 @@ function Attendees_details() {
   const csvData = attendee.map((attendee, index) => ({
     number: index + 1,
     ...attendee,
-    sms_alert: attendee.sms_alert ? "Yes" : "No",
+    // sms_alert: attendee.sms_alert ? "Yes" : "No",
   }));
 
   const totalPages = Math.ceil(attendee.length / attendeesPerPage);
@@ -143,7 +143,7 @@ function Attendees_details() {
                   selectedEvent?.id === event.id ? "selected" : ""
                 }`}
               >
-                <h6>{event.name}</h6>
+                <h6>{event.label}</h6>
                
               </div>
             ))}

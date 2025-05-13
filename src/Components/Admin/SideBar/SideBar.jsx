@@ -64,30 +64,31 @@ function SideBar() {
   };
 
   const duplicateForm = () => {
-    // Get the template (first item) data
-    const templateForm = newEvent.form_details[0];
+    // Get the template (last item) data
+    const templateForm =
+      newEvent.form_details[newEvent.form_details.length - 1];
 
     // Don't add if the template is empty
-    if (!templateForm.name.trim()) return;
+    // if (!templateForm.name.trim()) return;
 
-    // Insert the filled template as a new form below
+    // Insert the filled template as a new form above the template
     setForms((prevForms) => [
-      prevForms[0], // keep template at top
+      ...prevForms.slice(0, -1), // keep all forms except the template
       { id: Date.now() }, // new duplicated form
-      ...prevForms.slice(1),
+      prevForms[prevForms.length - 1], // keep the template at the bottom
     ]);
 
     setNewEvent((prevState) => ({
       ...prevState,
       form_details: [
-        // Keep template at top but reset it
-        { name: "", required: false, type: "" },
-        templateForm, // insert duplicated filled one
-        ...prevState.form_details.slice(1),
+        ...prevState.form_details.slice(0, -1), // keep all forms except the template
+        templateForm, // insert duplicated form
+        { name: "", required: false, type: "" }, // reset template
       ],
     }));
   };
 
+  
   // Event handler for form inputs (Event and Meetup forms)
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -350,7 +351,7 @@ function SideBar() {
                     />
                     <select
                       className="select-tab"
-                      value={newEvent.form_details[id].type}
+                      value={newEvent.form_details[id]?.type || ""}
                       onChange={(e) => handleTypeChange(id, e.target.value)}
                     >
                       <option>Select Type</option>
@@ -360,15 +361,16 @@ function SideBar() {
                       <option value="CheckBox">CheckBox</option>
                     </select>
 
-                    {id === 0 && (
+                    {/* AddIcon should render only for the template form */}
+                    {id === forms.length - 1 && (
                       <div
                         className="form-duplicate"
                         onClick={duplicateForm}
                         style={{
-                          cursor: newEvent.form_details[0].name.trim()
+                          cursor: newEvent.form_details[0]?.name?.trim()
                             ? "pointer"
                             : "not-allowed",
-                          opacity: newEvent.form_details[0].name.trim()
+                          opacity: newEvent.form_details[0]?.name?.trim()
                             ? 1
                             : 0.5,
                         }}
@@ -379,11 +381,11 @@ function SideBar() {
                   </div>
 
                   <div className="bottom">
-                    <h5>{newEvent.form_details[id].type}</h5>
+                    <h5>{newEvent.form_details[id]?.type || "No Type"}</h5>
                     <hr />
                     <div className="required-tab">
-                     
-                      {id !== 0 && (
+                      {/* Prevent deletion for the template form */}
+                      {id !== forms.length - 1 && (
                         <RiDeleteBin6Line
                           className="delete-icon"
                           onClick={() => handleDelete(id)}
@@ -395,10 +397,10 @@ function SideBar() {
                       <IoToggle
                         onClick={() => toggleRequired(id)}
                         style={{
-                          transform: newEvent.form_details[id].required
+                          transform: newEvent.form_details[id]?.required
                             ? "rotate(180deg)"
                             : "none",
-                          color: newEvent.form_details[id].required
+                          color: newEvent.form_details[id]?.required
                             ? "#5cb85c"
                             : "#ccc",
                           cursor: "pointer",
@@ -410,6 +412,8 @@ function SideBar() {
               </div>
             </div>
           ))}
+          
+          
           <button type="submit" className="pagination-btn" disabled={loading}>
             {loading ? "Previewing..." : "Preview"}
           </button>
