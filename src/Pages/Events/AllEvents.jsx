@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import logo from "../../assets/N8.png";
 import searchIcon from "../../assets/search.png";
 import { Link } from "react-router-dom";
-import "./Allevents.css";
+import "./AllEvents.css";
 import { FetchAllEvents } from "../../constants";
 
 const Events = () => {
