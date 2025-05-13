@@ -144,7 +144,7 @@ function Attendees_details() {
                 }`}
               >
                 <h6>{event.name}</h6>
-                {/* {event.name} */}
+               
               </div>
             ))}
           </div>

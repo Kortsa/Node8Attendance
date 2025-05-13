@@ -50,7 +50,7 @@ export const FetchAllEvents = async (page = 1, pageSize = 4) => {
       }
     );
     const data = await response.json();
-    console.log(data);
+    // console.log(data);
     
     const events = data.data || [];
     const hasMore = events.length === pageSize;

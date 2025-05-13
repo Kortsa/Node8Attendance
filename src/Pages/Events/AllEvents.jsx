@@ -3,7 +3,7 @@ import logo from "../../assets/N8.png";
 import searchIcon from "../../assets/search.png";
 import { Link } from "react-router-dom";
 import "./YnL.css";
-import { apiBaseUrl, FetchAllEvents } from "../../constants";
+import { FetchAllEvents } from "../../constants";
 
 const Events = () => {
   const [events, setEvents] = useState([]);
@@ -67,7 +67,6 @@ const Events = () => {
                 className="event_card"
               >
                 <h6>{event.name}</h6>
-                 
               </Link>
             ))
           )}
@@ -75,16 +74,16 @@ const Events = () => {
 
         {events.length > 0 && (
           <div className="pagination-controls">
-            <button
-              className="btn"
-              onClick={showPreviousCards}
-              disabled={page === 1}
-            >
-              Previous
-            </button>
-            <button className="btn" onClick={showMoreCards} disabled={!hasMore}>
-              Next
-            </button>
+            {page > 1 && (
+              <button className="btn" onClick={showPreviousCards}>
+                Previous
+              </button>
+            )}
+            {hasMore && (
+              <button className="btn" onClick={showMoreCards}>
+                Next
+              </button>
+            )}
           </div>
         )}
       </div>

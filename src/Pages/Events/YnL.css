@@ -58,16 +58,15 @@
   color: black;
 }
 
-.eventCard .events_Cards .event_card h6{
-width:100%;
-margin:auto;
-font-size: 1rem;
-text-align: center;
-
-display: flex;
-flex-direction: column;
-align-items: center;
-justify-content: center;
+.eventCard .events_Cards .event_card h6 {
+  width: 100%;
+  margin: auto;
+  font-size: 1rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .eventCard .button_container {
@@ -76,7 +75,6 @@ justify-content: center;
   justify-content: space-between;
   border: 1px solid red;
   padding: 2rem;
-  
 }
 .eventCard .btn {
   width: 48%;
@@ -94,12 +92,18 @@ justify-content: center;
   color: #fff !important;
 }
 
-
-.pagination-controls{
+.pagination-controls {
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+/* When there's only one button, make it take full width */
+.eventCard .pagination-controls:has(.btn:only-child) .btn {
+  width: 60%;
+  margin: auto;
+  margin-top: 1rem;
 }
 
 /* 
@@ -131,7 +135,11 @@ justify-content: center;
   }
 
   .eventCard .events_Cards {
-    grid-template-columns: 1fr;
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     width: 100%;
   }
 
@@ -141,6 +149,12 @@ justify-content: center;
     font-size: 1.5rem;
     margin-top: 1rem;
     padding: 1rem;
+    
+  }
+
+  .eventCard .events_Cards .event_card h6 {
+   font-size: 1rem;
+  
   }
   .eventCard .btn {
     width: 45%;
@@ -175,9 +189,11 @@ justify-content: center;
     font-size: 0.6rem;
   }
   .eventCard .events_Cards {
-    grid-template-columns: 1fr 1fr;
+     display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     width: 100%;
-    margin-left: 0.6rem;
   }
   .eventCard .events_Cards .event_card {
     width: 90%;
@@ -185,6 +201,10 @@ justify-content: center;
     font-size: 1.5rem;
     margin-top: 1rem;
     padding: 1rem;
+  }
+  .eventCard .events_Cards .event_card h6 {
+   font-size: 1rem;
+  
   }
 
   .eventCard .btn {
