@@ -51,25 +51,27 @@ const Events = () => {
         </div>
 
         <div className="events_Cards">
-          {loading ? (
-            <div className="loading">
-              <p>Loading events...</p>
-            </div>
-          ) : events.length === 0 ? (
-            <div className="no-events">
-              <p>No events available here</p>
-            </div>
-          ) : (
-            events.map((event, id) => (
-              <Link
-                key={id}
-                to={`/event_form/${event.id}`}
-                className="event_card"
-              >
-                <h6>{event.label}</h6>
-              </Link>
-            ))
-          )}
+          
+            {loading ? (
+              <div className="loading">
+                <p>Loading events...</p>
+              </div>
+            ) : events.length === 0 ? (
+              <div className="no-events">
+                <p>No events available here</p>
+              </div>
+            ) : (
+              events.map((event, id) => (
+                <Link
+                  key={id}
+                  to={`/event_form/${event.id}`}
+                  className="event_card"
+                >
+                  <h6>{event.label}</h6>
+                </Link>
+              ))
+            )}
+        
         </div>
 
         {events.length > 0 && (

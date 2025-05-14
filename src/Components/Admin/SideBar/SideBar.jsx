@@ -1,11 +1,10 @@
-import React, { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Modal from "react-modal";
 import logout from "../../../assets/icons.png";
 import warning from "../../../assets/warning.png";
 import AddIcon from "../../../assets/add.png";
 import { RiDeleteBin6Line } from "react-icons/ri";
-import { IoToggle } from "react-icons/io5";
+import { BsToggle2Off } from "react-icons/bs";
 import { Outlet } from "react-router-dom";
 import { useState } from "react";
 import { AdminTabs, apiBaseUrl } from "../../../constants";
@@ -20,6 +19,7 @@ function SideBar() {
   const [logoutIsOpen, setlogoutIsOpen] = useState(false);
   const [formOpen, setFormOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [errors, setErrors] = useState({});
 
   const formatToISO = (dateString) => {
     if (!dateString) return "";
@@ -64,14 +64,9 @@ function SideBar() {
   };
 
   const duplicateForm = () => {
-    // Get the template (last item) data
     const templateForm =
       newEvent.form_details[newEvent.form_details.length - 1];
 
-    // Don't add if the template is empty
-    // if (!templateForm.name.trim()) return;
-
-    // Insert the filled template as a new form above the template
     setForms((prevForms) => [
       ...prevForms.slice(0, -1), // keep all forms except the template
       { id: Date.now() }, // new duplicated form
@@ -88,10 +83,11 @@ function SideBar() {
     }));
   };
 
-  
   // Event handler for form inputs (Event and Meetup forms)
   const handleChange = (e) => {
     const { name, value } = e.target;
+
+    setNewEvent((prev) => ({ ...prev, [name]: value }));
 
     if (name === "start_at" || name === "end_at") {
       setNewEvent((prevState) => ({
@@ -111,6 +107,41 @@ function SideBar() {
         ...prevState,
         [name]: value,
       }));
+    }
+
+    // Update validation errors for the current field
+    setErrors((prev) => {
+      const updated = { ...prev };
+      if (value.trim().length < 1) {
+        updated[name] = " ";
+      } else {
+        delete updated[name]; // Remove the error for the field if valid
+      }
+      return updated;
+    });
+  };
+
+  const validateForm = () => {
+    const newErrors = {};
+    if (newEvent.name.trim().length < 1)
+      newErrors.name = "Event name is required.";
+    if (newEvent.start_at.trim().length < 1)
+      newErrors.start_at = "Start date is required.";
+    if (newEvent.venue.trim().length < 1)
+      newErrors.venue = "Event venue is required.";
+    if (newEvent.end_at.trim().length < 1)
+      newErrors.end_at = "End date is required.";
+
+    // Update the errors state
+    setErrors(newErrors);
+
+    // Return whether the form is valid (no errors)
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleNextClick = () => {
+    if (validateForm()) {
+      setFormOpen(true); // proceed
     }
   };
 
@@ -268,6 +299,7 @@ function SideBar() {
                 onChange={handleChange}
                 required
               />
+              {errors.name && <p className="error-text">{errors.name}</p>}
             </label>
             <label>
               Start Date*
@@ -278,7 +310,9 @@ function SideBar() {
                 value={newEvent.start_at.split("T")[0]}
                 onChange={handleChange}
                 required
+                min={new Date().toISOString().split("T")[0]} // disables past dates
               />
+              {errors.name && <p className="error-text">{errors.start_at}</p>}
             </label>
 
             <label>
@@ -291,6 +325,7 @@ function SideBar() {
                 onChange={handleChange}
                 required
               />
+              {errors.name && <p className="error-text">{errors.venue}</p>}
             </label>
 
             <label>
@@ -302,21 +337,19 @@ function SideBar() {
                 value={newEvent.end_at.split("T")[0]}
                 onChange={handleChange}
                 required
+                min={new Date().toISOString().split("T")[0]} // disables past dates
               />
+              {errors.name && <p className="error-text">{errors.end_at}</p>}
             </label>
           </div>
 
-          <button
-            type="button"
-            className="btn"
-            onClick={() => setFormOpen(true)}
-          >
+          <button type="button" className="btn" onClick={handleNextClick}>
             Next
           </button>
         </form>
       </Modal>
 
-      {/* modal for creation of form for an event */}
+      {/* modal for creation of forms for an event */}
       <Modal
         isOpen={formOpen}
         onRequestClose={closeFormModal}
@@ -361,7 +394,6 @@ function SideBar() {
                       <option value="CheckBox">CheckBox</option>
                     </select>
 
-                    {/* AddIcon should render only for the template form */}
                     {id === forms.length - 1 && (
                       <div
                         className="form-duplicate"
@@ -384,17 +416,14 @@ function SideBar() {
                     <h5>{newEvent.form_details[id]?.type || "No Type"}</h5>
                     <hr />
                     <div className="required-tab">
-                      {/* Prevent deletion for the template form */}
-                      {id !== forms.length - 1 && (
-                        <RiDeleteBin6Line
-                          className="delete-icon"
-                          onClick={() => handleDelete(id)}
-                          style={{ cursor: "pointer" }}
-                        />
-                      )}
+                      <RiDeleteBin6Line
+                        className="delete-icon"
+                        onClick={() => handleDelete(id)}
+                        style={{ cursor: "pointer" }}
+                      />
 
                       <h3>required</h3>
-                      <IoToggle
+                      <BsToggle2Off
                         onClick={() => toggleRequired(id)}
                         style={{
                           transform: newEvent.form_details[id]?.required
@@ -404,6 +433,7 @@ function SideBar() {
                             ? "#5cb85c"
                             : "#ccc",
                           cursor: "pointer",
+                          fontSize: "25px",
                         }}
                       />
                     </div>
@@ -412,8 +442,7 @@ function SideBar() {
               </div>
             </div>
           ))}
-          
-          
+
           <button type="submit" className="pagination-btn" disabled={loading}>
             {loading ? "Previewing..." : "Preview"}
           </button>

@@ -35,7 +35,6 @@
 }
 
 .eventCard .events_Cards {
-  /* margin: 0 auto; */
   width: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -135,7 +134,6 @@
   }
 
   .eventCard .events_Cards {
-    
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -149,12 +147,10 @@
     font-size: 1.5rem;
     margin-top: 1rem;
     padding: 1rem;
-    
   }
 
   .eventCard .events_Cards .event_card h6 {
-   font-size: 1rem;
-  
+    font-size: 1rem;
   }
   .eventCard .btn {
     width: 45%;
@@ -189,7 +185,7 @@
     font-size: 0.6rem;
   }
   .eventCard .events_Cards {
-     display: flex;
+    display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -203,8 +199,7 @@
     padding: 1rem;
   }
   .eventCard .events_Cards .event_card h6 {
-   font-size: 1rem;
-  
+    font-size: 1rem;
   }
 
   .eventCard .btn {
@@ -221,12 +216,24 @@
 */
 @media (min-width: 768px) and (max-width: 1024px) {
   .eventCard {
-    margin-left: 5rem;
-    width: 45rem;
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
   }
 
   .eventCard .events_Cards {
-    margin: 0 3rem;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .eventCard .events_Cards .event_card {
+    width: 95%;
+    margin: 0;
+    margin-top: 1rem;
   }
 }
 
@@ -235,11 +242,24 @@
 */
 @media (min-width: 1025px) and (max-width: 1280px) {
   .eventCard {
-    margin-left: 5rem;
-    width: 45rem;
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
   }
+
   .eventCard .events_Cards {
-    margin: 0 3rem;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .eventCard .events_Cards .event_card {
+    width: 95%;
+    margin: 0;
+    margin-top: 1rem;
   }
 }
 
@@ -247,11 +267,32 @@
   ##Device = Desktops 
 */
 @media (min-width: 1281px) {
-  .eventCard {
-    margin-left: 5rem;
-    width: 45rem;
+  .eventCard .search_container{
+    width: 85%;
   }
+  .eventCard {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    
+  }
+
   .eventCard .events_Cards {
-    margin: 0 3rem;
+    width: 85%;
+    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    /* border: 1px solid red; */
+  }
+
+ 
+
+  .eventCard .events_Cards .event_card {
+    width: 95%;
+    margin: 0;
+    margin-top: 1rem;
   }
 }

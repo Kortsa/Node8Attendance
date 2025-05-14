@@ -100,6 +100,12 @@
   margin-bottom: 2rem;
 }
 
+.error-text {
+  color: red;
+  font-size: 0.85rem;
+  margin-top: 0.25rem;
+}
+
 .sidebar_content .logout {
   display: flex;
   align-items: center;
@@ -161,8 +167,6 @@
   overflow-x: hidden;
   /* scrollbar-width: thin; */
   scroll-behavior: smooth;
-
-  
 }
 
 .modal_form .newformlabels {
@@ -183,7 +187,7 @@
   box-shadow: 10px 10px 10px 1px rgba(210, 208, 208, 0.5);
 }
 
- .newform:focus {
+.newform:focus {
   border: 1px solid #f15e1c;
   outline: none;
 }
@@ -271,10 +275,9 @@ button {
   font-size: 1rem;
   cursor: pointer;
   margin-top: 5rem;
-  
 }
 
-.form-contents{
+.form-contents {
   display: flex;
   flex-direction: column;
   align-items: center;
