@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { CSVLink } from "react-csv";
 import searchIcon from "../../../assets/search.png";
 import "../AdminEventsData/Attendees_details.css";
@@ -144,7 +144,6 @@ function Attendees_details() {
                 }`}
               >
                 <h6>{event.label}</h6>
-               
               </div>
             ))}
           </div>
@@ -194,9 +193,8 @@ function Attendees_details() {
                       transition={{ duration: 0.5, ease: "anticipate" }}
                     >
                       <div>{indexOfFirstAttendee + index + 1}</div>
-                      {[...(formFields && formFields)]
-                        .reverse()
-                        .map((field, idx) => (
+                      {formFields &&
+                        formFields.map((field, idx) => (
                           <div key={idx}>
                             {field.type === "CheckBox"
                               ? attendee[field.name] === true

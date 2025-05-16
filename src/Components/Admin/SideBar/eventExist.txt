@@ -1,0 +1,64 @@
+import { useEffect, useRef } from "react";
+
+// Add this to your state
+const [nameExists, setNameExists] = useState(false);
+const debounceRef = useRef(null);
+
+// Function to check for duplicate names
+const checkEventName = async (name) => {
+  if (!name.trim()) {
+    setNameExists(false);
+    return;
+  }
+
+  try {
+    const res = await fetch(`${apiBaseUrl}/events/exists?name=${encodeURIComponent(name)}`);
+    const data = await res.json();
+    setNameExists(data.exists);
+  } catch (error) {
+    console.error("Error checking event name:", error);
+    // Optionally set error state here
+  }
+};
+
+
+if (name === "name") {
+  // Debounce API call
+  if (debounceRef.current) clearTimeout(debounceRef.current);
+  debounceRef.current = setTimeout(() => {
+    checkEventName(value);
+  }, 500);
+}
+
+
+const validateForm = () => {
+  const newErrors = {};
+  if (newEvent.name.trim().length < 1)
+    newErrors.name = "Event name is required.";
+  else if (nameExists)
+    newErrors.name = "This event name already exists.";
+
+  if (newEvent.start_at.trim().length < 1)
+    newErrors.start_at = "Start date is required.";
+  if (newEvent.venue.trim().length < 1)
+    newErrors.venue = "Event venue is required.";
+  if (newEvent.end_at.trim().length < 1)
+    newErrors.end_at = "End date is required.";
+
+  setErrors(newErrors);
+  return Object.keys(newErrors).length === 0;
+};
+
+
+<label>
+  Name of event*
+  <input
+    type="text"
+    name="name"
+    className="inputfield"
+    value={newEvent.name}
+    onChange={handleChange}
+    required
+  />
+  {errors.name && <p className="error-text">{errors.name}</p>}
+</label>

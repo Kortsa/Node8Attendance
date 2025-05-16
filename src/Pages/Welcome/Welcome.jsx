@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Modal from "react-modal";
 import logo from "../../assets/N8.png";
@@ -38,7 +38,7 @@ const Welcome = () => {
       if (email === "admin@gmail.com" && password === "admin") {
         setLoading(false);
         Swal.fire({
-          title: "Tym Sync",
+          title: "CheckIn App",
           text: `You've Successfully Logged in as ${"Admin"}`,
           icon: "success",
           customClass: {
@@ -46,10 +46,10 @@ const Welcome = () => {
             text: "font-quicksand",
           },
         });
-        navigate("/mel-attendees/y&l-16-11-2024");
+        navigate("/admin-dashboard");
       } else {
         Swal.fire({
-          title: "Tym Sync",
+          title: "CheckIn App",
           text: `No user found, try again`,
           icon: "error",
           customClass: {
@@ -60,8 +60,6 @@ const Welcome = () => {
         setLoading(false);
         return;
       }
-
-      
 
       // After loading, navigate to the next page
       setLoading(false);

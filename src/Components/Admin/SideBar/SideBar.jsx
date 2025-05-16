@@ -1,12 +1,11 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation, Outlet } from "react-router-dom";
+import { useEffect, useState } from "react";
 import Modal from "react-modal";
 import logout from "../../../assets/icons.png";
 import warning from "../../../assets/warning.png";
 import AddIcon from "../../../assets/add.png";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { BsToggle2Off } from "react-icons/bs";
-import { Outlet } from "react-router-dom";
-import { useState } from "react";
 import { AdminTabs, apiBaseUrl } from "../../../constants";
 import "./SideBar.css";
 
@@ -14,12 +13,47 @@ Modal.setAppElement("#root");
 
 function SideBar() {
   const navigate = useNavigate();
-
+  const location = useLocation();
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [logoutIsOpen, setlogoutIsOpen] = useState(false);
   const [formOpen, setFormOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
+  const [typeErrors, setTypeErrors] = useState({});
+
+  const openEventModal = location.state?.openEventModal;
+  const eventToEdit = location.state?.event;
+
+  const prefillForm = (eventData) => {
+    setNewEvent({
+      name: eventData.name || "",
+      start_at: eventData.start_at || "",
+      end_at: eventData.end_at || "",
+      venue: eventData.venue || "",
+      deleted: false,
+      form_details: eventData.form_details?.length
+        ? [...eventData.form_details, { name: "", required: false, type: "" }]
+        : [{ name: "", required: false, type: "" }],
+    });
+
+    setForms(
+      eventData.form_details?.map((_, i) => ({ id: Date.now() + i })) || [
+        { id: Date.now() },
+      ]
+    );
+  };
+
+  useEffect(() => {
+    if (openEventModal) {
+      setModalIsOpen(true); // Your function to show the modal
+      // setFormOpen(true);
+
+      if (eventToEdit) {
+        prefillForm(eventToEdit); // Your function to pre-fill the form with data
+      }
+    }
+  }, [openEventModal, eventToEdit]);
+  
 
   const formatToISO = (dateString) => {
     if (!dateString) return "";
@@ -41,8 +75,6 @@ function SideBar() {
       },
     ], // Store meetup form questions
   });
-
-  // console.log("Submitting:", JSON.stringify(newEvent, null, 2));
 
   const [forms, setForms] = useState([{ id: Date.now() }]);
 
@@ -67,6 +99,28 @@ function SideBar() {
     const templateForm =
       newEvent.form_details[newEvent.form_details.length - 1];
 
+    // new code starts here
+    const lastIndex = newEvent.form_details.length - 1;
+    const lastForm = newEvent.form_details[lastIndex];
+
+    // If type is missing, show error
+    if (!lastForm.type) {
+      setTypeErrors((prev) => ({
+        ...prev,
+        [lastIndex]: "You must select a type.",
+      }));
+      return;
+    }
+
+    // Clear any existing error for the template
+    setTypeErrors((prev) => {
+      const updated = { ...prev };
+      delete updated[lastIndex];
+      return updated;
+    });
+
+    // new code ends here
+
     setForms((prevForms) => [
       ...prevForms.slice(0, -1), // keep all forms except the template
       { id: Date.now() }, // new duplicated form
@@ -82,6 +136,8 @@ function SideBar() {
       ],
     }));
   };
+
+  
 
   // Event handler for form inputs (Event and Meetup forms)
   const handleChange = (e) => {
@@ -113,7 +169,7 @@ function SideBar() {
     setErrors((prev) => {
       const updated = { ...prev };
       if (value.trim().length < 1) {
-        updated[name] = " ";
+        updated[name] = " required ";
       } else {
         delete updated[name]; // Remove the error for the field if valid
       }
@@ -171,38 +227,38 @@ function SideBar() {
     }));
   };
 
-  // Submit both event and meetup data
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
 
-    // Ensure both forms are filled before submitting
+    // Ensure base fields are present
     if (
       !newEvent.name ||
       !newEvent.start_at ||
       !newEvent.end_at ||
       !newEvent.venue
     ) {
-      alert("Please fill out all fields in the event form.");
       setLoading(false);
       return;
     }
 
-    if (newEvent.form_details.some((q) => !q.name || !q.type)) {
-      alert("Please fill out all fields in the meetup form.");
-      setLoading(false);
-      return;
+    // Remove last form if it's empty (template)
+    const cleanedFormDetails = [...newEvent.form_details];
+    const lastForm = cleanedFormDetails[cleanedFormDetails.length - 1];
+    if (!lastForm.name && !lastForm.type) {
+      cleanedFormDetails.pop();
     }
-    console.log("Submitting event:", newEvent);
+
+    // Revalidate cleaned form
     const formNames = new Set();
-    const hasDuplicates = newEvent.form_details.some((q) => {
+    const hasInvalid = cleanedFormDetails.some((q) => {
       if (!q.name || !q.type) return true;
       if (formNames.has(q.name)) return true;
       formNames.add(q.name);
       return false;
     });
 
-    if (hasDuplicates) {
+    if (hasInvalid) {
       alert(
         "Please ensure all form questions are unique and filled out properly."
       );
@@ -210,34 +266,15 @@ function SideBar() {
       return;
     }
 
-    try {
-      const res = await fetch(`${apiBaseUrl}/events/create`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newEvent),
-      });
-      const data = await res.json();
-      // console.log("server response:", data);
+    // Update the event data without the empty template before navigation
+    const eventWithoutTemplate = {
+      ...newEvent,
+      form_details: cleanedFormDetails,
+    };
 
-      if (res.ok) {
-        navigate("/preview", {
-          state: { event: data.event },
-        });
-      } else {
-        alert(
-          `Failed to add event. Server responded with: ${
-            data.message || "unknown error"
-          }`
-        );
-      }
-    } catch (error) {
-      console.error("Error creating event:", error);
-      alert("An error occurred. Please try again.");
-    } finally {
-      setLoading(false);
-    }
+    navigate("/preview", {
+      state: { event: eventWithoutTemplate },
+    });
   };
 
   return (
@@ -385,7 +422,17 @@ function SideBar() {
                     <select
                       className="select-tab"
                       value={newEvent.form_details[id]?.type || ""}
-                      onChange={(e) => handleTypeChange(id, e.target.value)}
+                      onChange={(e) => {
+                        handleTypeChange(id, e.target.value);
+                        // Clear error if type is selected
+                        if (e.target.value) {
+                          setTypeErrors((prev) => {
+                            const updated = { ...prev };
+                            delete updated[id];
+                            return updated;
+                          });
+                        }
+                      }}
                     >
                       <option>Select Type</option>
                       <option value="Short answers">Short answers</option>
@@ -413,8 +460,15 @@ function SideBar() {
                   </div>
 
                   <div className="bottom">
-                    <h5>{newEvent.form_details[id]?.type || "No Type"}</h5>
+                    <h5>
+                      {newEvent.form_details[id]?.type || "Select a type"}
+                    </h5>
+
                     <hr />
+                    {typeErrors[id] && (
+                      <p className="error-text">{typeErrors[id]}</p>
+                    )}
+
                     <div className="required-tab">
                       <RiDeleteBin6Line
                         className="delete-icon"
@@ -470,7 +524,6 @@ function SideBar() {
           </button>
         </div>
       </Modal>
-
       <Outlet />
     </>
   );
